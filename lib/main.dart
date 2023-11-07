@@ -19,6 +19,8 @@ class MyApp extends StatefulWidget {
 class _MyApp extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
+    // var modalVisivel = false;
+
     return MaterialApp(
       theme: ThemeData.dark(),
       home: Scaffold(
@@ -47,14 +49,15 @@ class _MyApp extends State<MyApp> {
                     decoration:
                         const InputDecoration(labelText: "Digite algo..."),
                     onSubmitted: (value) {
-                      setState(() {
-                        cityValue = value;
-                      });
-                      //print(cityValue);
+                      setState(
+                        () {
+                          cityValue = value;
+                        },
+                      );
                     },
                   ),
                 ),
-                WeatherCard(city: cityValue),
+                WeatherCard(city: cityValue)
               ],
             ),
           ),
