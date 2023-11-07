@@ -68,20 +68,21 @@ class _WeatherCard extends State<WeatherCard> {
   @override
   Widget build(BuildContext context) {
     requests = fetch(widget.city);
-    return Container(
-      decoration: BoxDecoration(
-        color: const Color(0xff3498DB),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      margin: const EdgeInsets.only(top: 20, bottom: 16),
-      padding: const EdgeInsets.only(top: 16, right: 24, bottom: 16, left: 24),
-      height: 150,
-      width: 360,
-      child: FutureBuilder<Requests>(
-        future: requests,
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.hasData) {
-            return Row(
+    return FutureBuilder<Requests>(
+      future: requests,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          return Container(
+            decoration: BoxDecoration(
+              color: const Color(0xff3498DB),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            margin: const EdgeInsets.only(top: 20, bottom: 16),
+            padding:
+                const EdgeInsets.only(top: 16, right: 24, bottom: 16, left: 24),
+            height: 150,
+            width: 360,
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
@@ -118,23 +119,39 @@ class _WeatherCard extends State<WeatherCard> {
                   ],
                 ),
               ],
-            );
-          } else if (snapshot.hasError) {
-            return const Center(
-              child: Text(
-                "Digite algo válido :)",
-                style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
-              ),
-            );
-          }
-          return const Center(
-            child: CircularProgressIndicator(
-              strokeWidth: 4,
-              color: Colors.black26,
             ),
           );
-        },
-      ),
+        } else if (snapshot.connectionState == ConnectionState.waiting) {
+          return Container(
+            margin: const EdgeInsets.only(top: 20, bottom: 16),
+            height: 150,
+            width: 360,
+            decoration: BoxDecoration(
+              color: const Color(0xff2C3E50),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: const Center(
+              child: CircularProgressIndicator(
+                strokeWidth: 4,
+                color: Color(0xff797979),
+              ),
+            ),
+          );
+        } else if (snapshot.hasError ||
+            snapshot.connectionState == ConnectionState.waiting) {
+          return Container(
+              margin: const EdgeInsets.only(top: 20, bottom: 16),
+              height: 150,
+              width: 360,
+              child: const Center(
+                child: Text(
+                  "Não conseguimos encontrar esta localização 🗺️",
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                ),
+              ));
+        }
+        return const SizedBox();
+      },
     );
   }
 }
