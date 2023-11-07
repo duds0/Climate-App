@@ -1,8 +1,11 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, non_constant_identifier_names
 
+import 'package:climate_app/main.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+
+var lat; //used for future validation
 
 Future<Requests> fetch(city) async {
   var urlCoordInfos =
@@ -10,7 +13,7 @@ Future<Requests> fetch(city) async {
   var response = await http.get(Uri.parse(urlCoordInfos));
   var jsonCoordInfos = jsonDecode(response.body);
 
-  var lat = jsonCoordInfos[0]["lat"];
+  lat = jsonCoordInfos[0]["lat"];
   var lon = jsonCoordInfos[0]["lon"];
 
   var urlWeatherInfos =
@@ -137,18 +140,18 @@ class _WeatherCard extends State<WeatherCard> {
               ),
             ),
           );
-        } else if (snapshot.hasError ||
-            snapshot.connectionState == ConnectionState.waiting) {
+        } else if (snapshot.hasError && cityValue != "") {
           return Container(
-              margin: const EdgeInsets.only(top: 20, bottom: 16),
-              height: 150,
-              width: 360,
-              child: const Center(
-                child: Text(
-                  "Não conseguimos encontrar esta localização 🗺️",
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-                ),
-              ));
+            margin: const EdgeInsets.only(top: 20, bottom: 16),
+            height: 150,
+            width: 360,
+            child: const Center(
+              child: Text(
+                "Não conseguimos encontrar esta localização 🗺️",
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+              ),
+            ),
+          );
         }
         return const SizedBox();
       },
