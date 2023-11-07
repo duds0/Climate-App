@@ -5,15 +5,13 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-var lat; //used for future validation
-
 Future<Requests> fetch(city) async {
   var urlCoordInfos =
       "https://api.openweathermap.org/geo/1.0/direct?q=$city&appid=95b9027fe9d1f6c19c6b21c7a2d3f521";
   var response = await http.get(Uri.parse(urlCoordInfos));
   var jsonCoordInfos = jsonDecode(response.body);
 
-  lat = jsonCoordInfos[0]["lat"];
+  var lat = jsonCoordInfos[0]["lat"];
   var lon = jsonCoordInfos[0]["lon"];
 
   var urlWeatherInfos =
@@ -71,10 +69,12 @@ class _WeatherCard extends State<WeatherCard> {
   @override
   Widget build(BuildContext context) {
     requests = fetch(widget.city);
+
     return FutureBuilder<Requests>(
       future: requests,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.hasData) {
+        if (snapshot.hasData &&
+            snapshot.connectionState == ConnectionState.done) {
           return Container(
             decoration: BoxDecoration(
               color: const Color(0xff3498DB),
