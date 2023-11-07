@@ -13,25 +13,10 @@ Future<Requests> fetch(city) async {
   var lat = jsonCoordInfos[0]["lat"];
   var lon = jsonCoordInfos[0]["lon"];
 
-  // var cityName = jsonCoordInfos[0]["name"];
-  // var county = jsonCoordInfos[0]["country"];
-  // var state = jsonCoordInfos[0]["state"];
-  //print("$cityName, $lat, $lon, $county, $state");
-  //print(json);
-  //print(city);
-
   var urlWeatherInfos =
       "https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=95b9027fe9d1f6c19c6b21c7a2d3f521&units=metric&lang=pt_br";
   var response0 = await http.get(Uri.parse(urlWeatherInfos));
   var jsonWeatherInfos = jsonDecode(response0.body);
-
-  // var temp = jsonWeatherInfos["main"]["temp"];
-  // var minTemp = jsonWeatherInfos["main"]["temp_min"];
-  // var maxTemp = jsonWeatherInfos["main"]["temp_max"];
-  // var description = jsonWeatherInfos["weather"][0]["description"];
-  // var icon = jsonWeatherInfos["weather"][0]["icon"];
-  //print("$temp, $minTemp, $maxTemp, $description, $icon");
-  //print(jsonWeatherInfos);
 
   var requests = Requests(
     name: jsonCoordInfos[0]["name"],
@@ -43,8 +28,6 @@ Future<Requests> fetch(city) async {
     description: jsonWeatherInfos["weather"][0]["description"],
     icon: jsonWeatherInfos["weather"][0]["icon"],
   );
-
-  //print(requests.description);
 
   return requests;
 }
@@ -70,7 +53,6 @@ class Requests {
       required this.icon});
 }
 
-// ignore: must_be_immutable
 class WeatherCard extends StatefulWidget {
   final String city;
   const WeatherCard({super.key, required this.city});

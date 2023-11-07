@@ -50,7 +50,6 @@ class _MyApp extends State<MyApp> {
                       setState(() {
                         cityValue = value;
                       });
-                      //print(cityValue);
                     },
                   ),
                 ),
