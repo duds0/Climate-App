@@ -4,6 +4,10 @@ import 'package:climate_app/main.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:lottie/lottie.dart';
+
+var icon;
+var snap;
 
 Future<Requests> fetch(city) async {
   var urlCoordInfos =
@@ -19,6 +23,10 @@ Future<Requests> fetch(city) async {
   var response0 = await http.get(Uri.parse(urlWeatherInfos));
   var jsonWeatherInfos = jsonDecode(response0.body);
 
+  icon = jsonWeatherInfos["weather"][0]["icon"];
+
+  print("aquiiiiiiiiii $icon");
+
   var requests = Requests(
     name: jsonCoordInfos[0]["name"],
     country: jsonCoordInfos[0]["country"],
@@ -27,7 +35,7 @@ Future<Requests> fetch(city) async {
     temp_min: jsonWeatherInfos["main"]["temp_min"],
     temp_max: jsonWeatherInfos["main"]["temp_max"],
     description: jsonWeatherInfos["weather"][0]["description"],
-    icon: jsonWeatherInfos["weather"][0]["icon"],
+    icon: icon,
   );
 
   return requests;
@@ -43,15 +51,16 @@ class Requests {
   final description;
   final icon;
 
-  Requests(
-      {required this.name,
-      required this.country,
-      required this.state,
-      required this.temp,
-      required this.temp_min,
-      required this.temp_max,
-      required this.description,
-      required this.icon});
+  Requests({
+    required this.name,
+    required this.country,
+    required this.state,
+    required this.temp,
+    required this.temp_min,
+    required this.temp_max,
+    required this.description,
+    required this.icon,
+  });
 }
 
 class WeatherCard extends StatefulWidget {
@@ -75,6 +84,7 @@ class _WeatherCard extends State<WeatherCard> {
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData &&
             snapshot.connectionState == ConnectionState.done) {
+          snap = snapshot.data.icon;
           return Container(
             decoration: BoxDecoration(
               color: const Color(0xff3498DB),
@@ -82,7 +92,7 @@ class _WeatherCard extends State<WeatherCard> {
             ),
             margin: const EdgeInsets.only(top: 20, bottom: 16),
             padding:
-                const EdgeInsets.only(top: 16, right: 24, bottom: 16, left: 24),
+                const EdgeInsets.only(top: 16, right: 16, bottom: 16, left: 24),
             height: 150,
             width: 360,
             child: Row(
@@ -117,8 +127,9 @@ class _WeatherCard extends State<WeatherCard> {
                 ),
                 Row(
                   children: [
-                    Image.network(
-                        "https://openweathermap.org/img/wn/${snapshot.data!.icon}@2x.png"),
+                    Lottie.asset(getWeatherAnimation(icon))
+                    // Image.network(
+                    //     "https://openweathermap.org/img/wn/${snapshot.data!.icon}@2x.png"),
                   ],
                 ),
               ],
@@ -164,4 +175,41 @@ String firstLetterToUpperCase(String text) {
     return text;
   }
   return text[0].toUpperCase() + text.substring(1).toLowerCase();
+}
+
+getWeatherAnimation(String? icon) {
+  switch (icon!.toLowerCase()) {
+    case "01d":
+      return "assets/animations/Sunny.json";
+    case "01n":
+      return "assets/animations/Moon.json";
+
+    case "02d":
+      return "assets/animations/Partly_cloudy_day.json";
+
+    case "02n":
+      return "assets/animations/Moon_Cloudy.json";
+
+    case "03d" || "03n" || "04d" || "04n":
+      return "assets/animations/Windy.json";
+
+    case "09d" || "10d":
+      return "assets/animations/Rainny_day.json";
+
+    case "09n" || "10n":
+      return "assets/animations/Rainny_night.json";
+
+    case "11d" || "11n":
+      return "assets/animations/Storm.json";
+
+    case "13d" || "13n":
+      return "assets/animations/Snow.json";
+
+    case "50d" || "50n":
+      return "assets/animations/Mist.json";
+
+    default:
+      return Image.network(
+          "https://openweathermap.org/img/wn/${snap.data!.icon}@2x.png");
+  }
 }
