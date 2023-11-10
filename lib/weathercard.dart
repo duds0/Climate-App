@@ -25,8 +25,6 @@ Future<Requests> fetch(city) async {
 
   icon = jsonWeatherInfos["weather"][0]["icon"];
 
-  print("aquiiiiiiiiii $icon");
-
   var requests = Requests(
     name: jsonCoordInfos[0]["name"],
     country: jsonCoordInfos[0]["country"],
