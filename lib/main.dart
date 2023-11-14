@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'weathercard.dart';
+import 'backgrounds.dart';
 
 // ignore: prefer_typing_uninitialized_variables
 var cityValue = "";
@@ -19,48 +20,52 @@ class MyApp extends StatefulWidget {
 class _MyApp extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    // var modalVisivel = false;
-
     return MaterialApp(
       theme: ThemeData.dark(),
       home: Scaffold(
-        backgroundColor: const Color(0xff2C3E50),
-        appBar: AppBar(
-          actions: [
-            IconButton(
-                onPressed: () => {exit(0)}, icon: const Icon(Icons.logout))
-          ],
-          backgroundColor: const Color(0xff34495E),
-          title: const Text("Climate App"),
-        ),
-        body: Center(
-          child: Container(
-            padding: const EdgeInsets.only(top: 24, bottom: 0),
-            child: Column(
-              children: [
-                const Text(
-                  "Pesquise por sua cidade aqui ;)",
-                  style: TextStyle(fontSize: 18),
-                ),
-                Container(
-                  padding: const EdgeInsets.only(
-                      top: 24, right: 32, bottom: 20, left: 32),
-                  child: TextField(
-                    decoration:
-                        const InputDecoration(labelText: "Digite algo..."),
-                    onSubmitted: (value) {
-                      setState(
-                        () {
-                          cityValue = value;
-                        },
-                      );
-                    },
-                  ),
-                ),
-                WeatherCard(city: cityValue)
-              ],
+        body: Stack(
+          children: [
+            Background(),
+            Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: EdgeInsets.all(24),
+                    child: TextField(
+                      decoration: const InputDecoration(
+                        labelStyle: TextStyle(color: Colors.white54),
+                        labelText: "Digite sua cidade aqui",
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(16),
+                          ),
+                        ),
+                        // -------
+                        // -------
+                        // -------
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white38),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(16),
+                          ),
+                        ),
+                      ),
+                      onSubmitted: (value) {
+                        setState(
+                          () {
+                            cityValue = value;
+                          },
+                        );
+                      },
+                    ),
+                  )),
             ),
-          ),
+            WeatherCard(city: cityValue),
+          ],
         ),
       ),
     );
