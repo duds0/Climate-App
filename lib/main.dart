@@ -1,7 +1,5 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'weathercard.dart';
-import 'backgrounds.dart';
 
 // ignore: prefer_typing_uninitialized_variables
 var cityValue = "";
@@ -25,7 +23,7 @@ class _MyApp extends State<MyApp> {
       home: Scaffold(
         body: Stack(
           children: [
-            Background(),
+            WeatherCard(city: cityValue),
             Container(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
@@ -35,7 +33,7 @@ class _MyApp extends State<MyApp> {
                     padding: EdgeInsets.all(24),
                     child: TextField(
                       decoration: const InputDecoration(
-                        labelStyle: TextStyle(color: Colors.white54),
+                        labelStyle: TextStyle(color: Colors.white),
                         labelText: "Digite sua cidade aqui",
                         contentPadding:
                             EdgeInsets.symmetric(vertical: 16, horizontal: 24),
@@ -48,7 +46,7 @@ class _MyApp extends State<MyApp> {
                         // -------
                         // -------
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white38),
+                          borderSide: BorderSide(color: Colors.white),
                           borderRadius: BorderRadius.all(
                             Radius.circular(16),
                           ),
@@ -64,7 +62,6 @@ class _MyApp extends State<MyApp> {
                     ),
                   )),
             ),
-            WeatherCard(city: cityValue),
           ],
         ),
       ),
