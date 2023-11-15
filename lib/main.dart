@@ -24,13 +24,13 @@ class _MyApp extends State<MyApp> {
         body: Stack(
           children: [
             WeatherCard(city: cityValue),
-            Container(
+            SizedBox(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               child: Align(
                   alignment: Alignment.bottomCenter,
                   child: Padding(
-                    padding: EdgeInsets.all(24),
+                    padding: const EdgeInsets.all(24),
                     child: TextField(
                       decoration: const InputDecoration(
                         labelStyle: TextStyle(color: Colors.white),
