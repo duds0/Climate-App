@@ -1,12 +1,13 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, non_constant_identifier_names
 
+import 'package:climate_app/backgrounds.dart';
 import 'package:climate_app/main.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
 
-var icon;
+var icon = "initial";
 var snap;
 
 Future<Requests> fetch(city) async {
@@ -25,8 +26,6 @@ Future<Requests> fetch(city) async {
 
   icon = jsonWeatherInfos["weather"][0]["icon"];
 
-  print("aquiiiiiiiiii $icon");
-
   var requests = Requests(
     name: jsonCoordInfos[0]["name"],
     country: jsonCoordInfos[0]["country"],
@@ -36,6 +35,9 @@ Future<Requests> fetch(city) async {
     temp_max: jsonWeatherInfos["main"]["temp_max"],
     description: jsonWeatherInfos["weather"][0]["description"],
     icon: icon,
+    humidity: jsonWeatherInfos["main"]["humidity"],
+    windSpeed: jsonWeatherInfos["wind"]["speed"],
+    feelsLike: jsonWeatherInfos["main"]["feels_like"],
   );
 
   return requests;
@@ -50,6 +52,9 @@ class Requests {
   final temp_max;
   final description;
   final icon;
+  final humidity;
+  final windSpeed;
+  final feelsLike;
 
   Requests({
     required this.name,
@@ -60,6 +65,9 @@ class Requests {
     required this.temp_max,
     required this.description,
     required this.icon,
+    required this.humidity,
+    required this.windSpeed,
+    required this.feelsLike,
   });
 }
 
@@ -85,84 +93,167 @@ class _WeatherCard extends State<WeatherCard> {
         if (snapshot.hasData &&
             snapshot.connectionState == ConnectionState.done) {
           snap = snapshot.data.icon;
-          return Container(
-            decoration: BoxDecoration(
-              color: const Color(0xff3498DB),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            margin: const EdgeInsets.only(top: 20, bottom: 16),
-            padding:
-                const EdgeInsets.only(top: 16, right: 16, bottom: 16, left: 24),
-            height: 150,
-            width: 360,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
+          return Stack(
+            children: [
+              Background(),
+              Positioned(
+                bottom: 100,
+                left: 0,
+                right: 0,
+                child: Center(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        "${snapshot.data!.name} ${snapshot.data!.temp.toStringAsFixed(0)}°",
-                        style: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Lottie.asset(getWeatherAnimation(icon), height: 150),
+                          Text(
+                            "${snapshot.data!.temp.toStringAsFixed(0)}°",
+                            style: const TextStyle(
+                                fontSize: 48, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            "${snapshot.data!.name}",
+                            style: const TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.w500),
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                              "${snapshot.data!.state}, ${snapshot.data!.country}",
+                              style:
+                                  const TextStyle(fontStyle: FontStyle.italic)),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Text(
+                              firstLetterToUpperCase(
+                                  "${snapshot.data!.description}"),
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w300, fontSize: 17)),
+                        ],
                       ),
-                      Text(
-                        "${snapshot.data!.state}, ${snapshot.data!.country}",
-                        style: const TextStyle(
-                            fontSize: 14, fontStyle: FontStyle.italic),
-                      ),
-                      Text(
-                          "Mín: ${snapshot.data!.temp_min.toStringAsFixed(1)}°"),
-                      Text(
-                          "Máx: ${snapshot.data!.temp_max.toStringAsFixed(1)}°"),
-                      Text(
-                        firstLetterToUpperCase(snapshot.data.description),
-                        style: const TextStyle(
-                            fontWeight: FontWeight.w600, fontSize: 16),
-                      ),
+                      const SizedBox(height: 125),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Column(
+                            children: [
+                              const Text(
+                                "Humidade",
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w400),
+                              ),
+                              const SizedBox(height: 8),
+                              RichText(
+                                text: TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: "${snapshot.data!.humidity}",
+                                      style: const TextStyle(
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const TextSpan(
+                                      text: "%",
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              const Text(
+                                "Sens. Térmica",
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w400),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                "${snapshot.data!.feelsLike.toStringAsFixed(1)}°",
+                                style: const TextStyle(
+                                    fontSize: 30, fontWeight: FontWeight.bold),
+                              )
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              const Text(
+                                "Vel. Vento",
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w400),
+                              ),
+                              const SizedBox(height: 8),
+                              RichText(
+                                text: TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text:
+                                          "${snapshot.data!.windSpeed.toStringAsFixed(0)}",
+                                      style: const TextStyle(
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const TextSpan(
+                                      text: "km/h",
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      )
                     ],
                   ),
                 ),
-                Row(
-                  children: [
-                    Lottie.asset(getWeatherAnimation(icon))
-                    // Image.network(
-                    //     "https://openweathermap.org/img/wn/${snapshot.data!.icon}@2x.png"),
-                  ],
-                ),
-              ],
-            ),
+              ),
+            ],
           );
         } else if (snapshot.connectionState == ConnectionState.waiting) {
-          return Container(
-            margin: const EdgeInsets.only(top: 20, bottom: 16),
-            height: 150,
-            width: 360,
-            decoration: BoxDecoration(
-              color: const Color(0xff2C3E50),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: const Center(
-              child: CircularProgressIndicator(
-                strokeWidth: 4,
-                color: Color(0xff797979),
+          return const Stack(
+            children: [
+              Background(),
+              Center(
+                child: CircularProgressIndicator(
+                  strokeWidth: 3,
+                  color: Color(0xffffffff),
+                ),
               ),
-            ),
+            ],
           );
         } else if (snapshot.hasError && cityValue != "") {
-          return Container(
-            margin: const EdgeInsets.only(top: 20, bottom: 16),
-            height: 150,
-            width: 360,
-            child: const Center(
-              child: Text(
-                "Não conseguimos encontrar esta localização 🗺️",
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+          icon = "initial";
+          return const Stack(
+            children: [
+              Background(),
+              Center(
+                child: Text(
+                  "Não conseguimos encontrar essa localização 🗺️",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
+                ),
               ),
-            ),
+            ],
           );
+        } else if (cityValue == "") {
+          icon = "initial";
+          return const Stack(children: [
+            Background(),
+            Center(
+                child: Text(
+              "Não há nada aqui.",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w300),
+            ))
+          ]);
         }
         return const SizedBox();
       },
@@ -170,17 +261,11 @@ class _WeatherCard extends State<WeatherCard> {
   }
 }
 
-String firstLetterToUpperCase(String text) {
-  if (text.isEmpty) {
-    return text;
-  }
-  return text[0].toUpperCase() + text.substring(1).toLowerCase();
-}
-
 getWeatherAnimation(String? icon) {
   switch (icon!.toLowerCase()) {
     case "01d":
       return "assets/animations/Sunny.json";
+
     case "01n":
       return "assets/animations/Moon.json";
 
@@ -212,4 +297,11 @@ getWeatherAnimation(String? icon) {
       return Image.network(
           "https://openweathermap.org/img/wn/${snap.data!.icon}@2x.png");
   }
+}
+
+String firstLetterToUpperCase(String text) {
+  if (text.isEmpty) {
+    return text;
+  }
+  return text[0].toUpperCase() + text.substring(1).toLowerCase();
 }

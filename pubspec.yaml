@@ -39,6 +39,8 @@ dependencies:
   flutter_native_splash: ^2.3.4
   flutter_launcher_icons: ^0.13.1
   lottie: ^2.6.0
+  weather_animation: ^1.0.1
+  flare_flutter: ^3.0.0
 
 flutter_native_splash:
   color: "#424242"
