@@ -86,7 +86,7 @@ class _WeatherCard extends State<WeatherCard> {
           snap = snapshot.data.icon;
           return Stack(
             children: [
-              Background(),
+              const Background(),
               Center(
                   child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -113,11 +113,16 @@ class _WeatherCard extends State<WeatherCard> {
             ],
           );
         } else if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CircularProgressIndicator(
-              strokeWidth: 3,
-              color: Color(0xffffffff),
-            ),
+          return const Stack(
+            children: [
+              Background(),
+              Center(
+                child: CircularProgressIndicator(
+                  strokeWidth: 3,
+                  color: Color(0xffffffff),
+                ),
+              ),
+            ],
           );
         } else if (snapshot.hasError && cityValue != "") {
           return const Center(
