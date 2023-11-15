@@ -140,7 +140,7 @@ class _WeatherCard extends State<WeatherCard> {
                           Column(
                             children: [
                               const Text(
-                                "Humidade",
+                                "Umidade",
                                 style: TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.w400),
                               ),
