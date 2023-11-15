@@ -16,10 +16,9 @@ class _Background extends State<Background> {
     return Stack(
       children: [
         SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          child: backgroundAnimation(icon),
-        )
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            child: backgroundAnimation(icon))
       ],
     );
   }
@@ -400,6 +399,35 @@ backgroundAnimation(String? icon) {
           ),
         ),
         WindWidget()
+      ]);
+
+    case "initial":
+      return const WrapperScene(colors: [
+        Color(0xff424242),
+        Color(0xff48484A)
+      ], children: [
+        CloudWidget(
+          cloudConfig: CloudConfig(
+            size: 250,
+            color: Color(0xad90a4ae),
+            x: 30,
+            y: 100,
+            slideX: 20,
+            slideY: 0,
+          ),
+        ),
+        CloudWidget(
+          cloudConfig: CloudConfig(
+            size: 160,
+            color: Color(0xb1607d8b),
+            x: 160,
+            y: 200,
+            slideY: 4,
+          ),
+        ),
+        WindWidget(
+          windConfig: WindConfig(y: 400),
+        )
       ]);
 
     default:
