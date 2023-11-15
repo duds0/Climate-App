@@ -7,7 +7,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
 
-var icon;
+var icon = "initial";
 var snap;
 
 Future<Requests> fetch(city) async {
@@ -125,12 +125,28 @@ class _WeatherCard extends State<WeatherCard> {
             ],
           );
         } else if (snapshot.hasError && cityValue != "") {
-          return const Center(
-            child: Text(
-              "Não conseguimos encontrar essa localização 🗺️",
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-            ),
+          icon = "initial";
+          return const Stack(
+            children: [
+              Background(),
+              Center(
+                child: Text(
+                  "Não conseguimos encontrar essa localização 🗺️",
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                ),
+              ),
+            ],
           );
+        } else if (cityValue == "") {
+          icon = "initial";
+          return const Stack(children: [
+            Background(),
+            Center(
+                child: Text(
+              "Não há nada aqui.",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w300),
+            ))
+          ]);
         }
         return const SizedBox();
       },
