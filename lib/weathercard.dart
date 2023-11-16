@@ -220,7 +220,7 @@ class _WeatherCard extends State<WeatherCard> {
             ],
           );
         } else if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Stack(
+          return Stack(
             children: [
               Background(),
               Center(
@@ -233,7 +233,7 @@ class _WeatherCard extends State<WeatherCard> {
           );
         } else if (snapshot.hasError && cityValue != "") {
           icon = "initial";
-          return const Stack(
+          return Stack(
             children: [
               Background(),
               Center(
@@ -246,7 +246,7 @@ class _WeatherCard extends State<WeatherCard> {
           );
         } else if (cityValue == "") {
           icon = "initial";
-          return const Stack(children: [
+          return Stack(children: [
             Background(),
             Center(
                 child: Text(
