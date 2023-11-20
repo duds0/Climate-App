@@ -219,7 +219,8 @@ class _WeatherCard extends State<WeatherCard> {
               ),
             ],
           );
-        } else if (snapshot.connectionState == ConnectionState.waiting) {
+        } else if (snapshot.connectionState == ConnectionState.waiting &&
+            cityValue != "") {
           return Stack(
             children: [
               Background(),
