@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 
+class ScreenArguments {
+  var name;
+  var temp;
+  ScreenArguments(
+    this.name,
+    this.temp,
+  );
+}
+
 class Locations extends StatefulWidget {
-  const Locations({super.key});
+  Locations({super.key});
 
   @override
   _Locations createState() => _Locations();
@@ -10,16 +19,20 @@ class Locations extends StatefulWidget {
 class _Locations extends State<Locations> {
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)?.settings.arguments as ScreenArguments;
+
     return MaterialApp(
       theme: ThemeData.dark(),
       home: Scaffold(
         backgroundColor: Color(0xff1F1F1F),
         appBar: AppBar(
-          shadowColor: Colors.transparent,
-          backgroundColor: Color(0xff1F1F1F),
-          leading:
-              Icon(Icons.arrow_back_rounded, color: Colors.white, size: 25),
-        ),
+            shadowColor: Colors.transparent,
+            backgroundColor: Color(0xff1F1F1F),
+            leading: IconButton(
+              onPressed: () =>
+                  {Navigator.pushReplacementNamed(context, "/home")},
+              icon: Icon(Icons.arrow_back_rounded),
+            )),
         body: Container(
           padding:
               const EdgeInsets.only(top: 8, right: 20, bottom: 8, left: 20),
@@ -30,7 +43,7 @@ class _Locations extends State<Locations> {
             children: [
               const Text(
                 "Suas cidades",
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
+                style: TextStyle(fontSize: 30),
               ),
               const SizedBox(height: 32),
               const SizedBox(
@@ -64,8 +77,8 @@ class _Locations extends State<Locations> {
               ),
               const SizedBox(height: 32),
               Container(
-                padding:
-                    EdgeInsets.only(top: 20, right: 24, bottom: 20, left: 24),
+                padding: const EdgeInsets.only(
+                    top: 20, right: 24, bottom: 20, left: 24),
                 decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                     color: Color(0xff34495E)),
@@ -74,11 +87,11 @@ class _Locations extends State<Locations> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Ipupiara",
+                      "${args.name}",
                       style: TextStyle(fontSize: 20),
                     ),
                     Text(
-                      "26°",
+                      "${args.temp}",
                       style: TextStyle(fontSize: 32),
                     )
                   ],
