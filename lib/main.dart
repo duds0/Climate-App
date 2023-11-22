@@ -1,5 +1,8 @@
+import 'package:climate_app/src/new_locations.dart';
+import 'src/home.dart';
 import 'package:flutter/material.dart';
-import 'weathercard.dart';
+import 'src/main_screen.dart';
+import 'src/home.dart';
 
 // ignore: prefer_typing_uninitialized_variables
 var cityValue = "";
@@ -20,50 +23,11 @@ class _MyApp extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.dark(),
-      home: Scaffold(
-        body: Stack(
-          children: [
-            WeatherCard(city: cityValue),
-            SizedBox(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding: const EdgeInsets.all(24),
-                  child: TextField(
-                    decoration: const InputDecoration(
-                      labelStyle: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.w300),
-                      labelText: "Digite sua cidade aqui",
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(16),
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(16),
-                        ),
-                      ),
-                    ),
-                    onSubmitted: (value) {
-                      setState(
-                        () {
-                          cityValue = value;
-                        },
-                      );
-                    },
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+      initialRoute: "/new_locations",
+      routes: {
+        "/home": (context) => HomePage(),
+        "/new_locations": (context) => Locations(),
+      },
     );
   }
 }
