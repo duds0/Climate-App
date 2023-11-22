@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'main_screen.dart';
 import '/main.dart';
+import 'new_locations.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,6 +14,26 @@ class _Home extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        actions: [
+          IconButton(
+              onPressed: () => {
+                    Navigator.pushReplacementNamed(context, "/new_locations",
+                        arguments: ScreenArguments(
+                          requests?.name,
+                          requests?.temp,
+                        ))
+                  },
+              icon: const Icon(
+                Icons.add_location_alt_outlined,
+                size: 25,
+                color: Colors.white,
+              ))
+        ],
+      ),
       body: Stack(
         children: [
           WeatherCard(city: cityValue),
