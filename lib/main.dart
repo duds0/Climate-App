@@ -1,8 +1,6 @@
 import 'package:climate_app/src/new_locations.dart';
 import 'src/home.dart';
 import 'package:flutter/material.dart';
-import 'src/main_screen.dart';
-import 'src/home.dart';
 
 // ignore: prefer_typing_uninitialized_variables
 var cityValue = "";
