@@ -21,7 +21,7 @@ class _MyApp extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.dark(),
-      initialRoute: "/new_locations",
+      initialRoute: "/home",
       routes: {
         "/home": (context) => HomePage(),
         "/new_locations": (context) => Locations(),
