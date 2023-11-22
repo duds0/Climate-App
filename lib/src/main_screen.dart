@@ -8,6 +8,7 @@ import 'package:lottie/lottie.dart';
 
 var icon = "initial";
 var snap;
+var requests;
 
 Future<Requests> fetch(city) async {
   var urlCoordInfos =
@@ -25,7 +26,7 @@ Future<Requests> fetch(city) async {
 
   icon = jsonWeatherInfos["weather"][0]["icon"];
 
-  var requests = Requests(
+  requests = Requests(
     name: jsonCoordInfos[0]["name"],
     country: jsonCoordInfos[0]["country"],
     state: jsonCoordInfos[0]["state"],
