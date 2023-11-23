@@ -1,37 +1,54 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
+import 'package:climate_app/src/services.dart';
+import 'package:climate_app/src/weathercard.dart';
 import 'package:flutter/material.dart';
+import 'package:climate_app/main.dart';
 
 class ScreenArguments {
   var name;
+  var state;
+  var country;
   var temp;
   ScreenArguments(
     this.name,
+    this.state,
+    this.country,
     this.temp,
   );
 }
 
 class Locations extends StatefulWidget {
-  Locations({super.key});
+  const Locations({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _Locations createState() => _Locations();
 }
 
 class _Locations extends State<Locations> {
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)?.settings.arguments as ScreenArguments;
+    // final args = ModalRoute.of(context)?.settings.arguments as ScreenArguments;
+
+    // var undefined = "- -";
+    // var name = args.name ?? undefined;
+    // var state = args.state ?? undefined;
+    // var country = args.country ?? undefined;
+    // var temp =
+    //     args.temp != null ? "${args.temp.toStringAsFixed(1)}°" : undefined;
 
     return MaterialApp(
       theme: ThemeData.dark(),
       home: Scaffold(
-        backgroundColor: Color(0xff1F1F1F),
+        backgroundColor: const Color(0xff1F1F1F),
         appBar: AppBar(
             shadowColor: Colors.transparent,
-            backgroundColor: Color(0xff1F1F1F),
+            backgroundColor: const Color(0xff1F1F1F),
             leading: IconButton(
               onPressed: () =>
                   {Navigator.pushReplacementNamed(context, "/home")},
-              icon: Icon(Icons.arrow_back_rounded),
+              icon: const Icon(Icons.arrow_back_rounded),
             )),
         body: Container(
           padding:
@@ -46,15 +63,14 @@ class _Locations extends State<Locations> {
                 style: TextStyle(fontSize: 30),
               ),
               const SizedBox(height: 32),
-              const SizedBox(
+              SizedBox(
                 height: 56,
                 child: TextField(
-                  expands: true,
-                  maxLines: null,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.search),
                     filled: true,
                     fillColor: Color(0xff323232),
-                    prefixIcon: Icon(Icons.search),
+                    // prefixIcon: Icon(Icons.search),
                     labelStyle:
                         TextStyle(color: Color(0xff797979), fontSize: 17),
                     labelText: "Digite seu local",
@@ -73,30 +89,18 @@ class _Locations extends State<Locations> {
                       ),
                     ),
                   ),
+                  onSubmitted: (city) {
+                    setState(
+                      () {
+                        cityValue = city;
+                        fetch(city);
+                      },
+                    );
+                  },
                 ),
               ),
               const SizedBox(height: 32),
-              Container(
-                padding: const EdgeInsets.only(
-                    top: 20, right: 24, bottom: 20, left: 24),
-                decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                    color: Color(0xff34495E)),
-                height: 96,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "${args.name}",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    Text(
-                      "${args.temp}",
-                      style: TextStyle(fontSize: 32),
-                    )
-                  ],
-                ),
-              ),
+              WeatherCard(city: cityValue),
             ],
           ),
         ),
