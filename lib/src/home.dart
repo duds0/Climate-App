@@ -24,6 +24,8 @@ class _Home extends State<HomePage> {
                     Navigator.pushReplacementNamed(context, "/new_locations",
                         arguments: ScreenArguments(
                           requests?.name,
+                          requests?.state,
+                          requests?.country,
                           requests?.temp,
                         ))
                   },
@@ -36,7 +38,7 @@ class _Home extends State<HomePage> {
       ),
       body: Stack(
         children: [
-          WeatherCard(city: cityValue),
+          MainScreen(city: cityValue),
           SizedBox(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
