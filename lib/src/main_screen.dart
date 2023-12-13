@@ -11,14 +11,18 @@ var requests;
 
 class MainScreen extends StatefulWidget {
   final String city;
-  const MainScreen({super.key, required this.city});
+
+  const MainScreen({
+    super.key,
+    required this.city,
+  });
 
   @override
   // ignore: library_private_types_in_public_api
-  _WeatherCard createState() => _WeatherCard();
+  _MainScreen createState() => _MainScreen();
 }
 
-class _WeatherCard extends State<MainScreen> {
+class _MainScreen extends State<MainScreen> {
   Future<Requests>? requests;
 
   @override
@@ -34,127 +38,123 @@ class _WeatherCard extends State<MainScreen> {
           return Stack(
             children: [
               Background(),
-              Positioned(
-                bottom: 100,
-                left: 0,
-                right: 0,
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Lottie.asset(getWeatherAnimation(icon), height: 150),
-                          Text(
-                            "${snapshot.data!.temp.toStringAsFixed(0)}°",
+              Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Column(
+                      children: [
+                        Lottie.asset(getWeatherAnimation(icon), height: 150),
+                        Text(
+                          "${snapshot.data!.temp.toStringAsFixed(0)}°",
+                          style: const TextStyle(
+                              fontSize: 48, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          "${snapshot.data!.name}",
+                          style: const TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w500),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                            "${snapshot.data!.state}, ${snapshot.data!.country}",
+                            style:
+                                const TextStyle(fontStyle: FontStyle.italic)),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Text(
+                            firstLetterToUpperCase(
+                                "${snapshot.data!.description}"),
                             style: const TextStyle(
-                                fontSize: 48, fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            "${snapshot.data!.name}",
-                            style: const TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w500),
-                          ),
-                          const SizedBox(height: 2),
-                          Text(
-                              "${snapshot.data!.state}, ${snapshot.data!.country}",
-                              style:
-                                  const TextStyle(fontStyle: FontStyle.italic)),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          Text(
-                              firstLetterToUpperCase(
-                                  "${snapshot.data!.description}"),
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w300, fontSize: 17)),
-                        ],
-                      ),
-                      const SizedBox(height: 125),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Column(
-                            children: [
-                              const Text(
-                                "Umidade",
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w400),
-                              ),
-                              const SizedBox(height: 8),
-                              RichText(
-                                text: TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: "${snapshot.data!.humidity}",
-                                      style: const TextStyle(
-                                        fontSize: 30,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    const TextSpan(
-                                      text: "%",
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              const Text(
-                                "Sens. Térmica",
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w400),
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                "${snapshot.data!.feelsLike.toStringAsFixed(1)}°",
-                                style: const TextStyle(
-                                    fontSize: 30, fontWeight: FontWeight.bold),
-                              )
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              const Text(
-                                "Vel. Vento",
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w400),
-                              ),
-                              const SizedBox(height: 8),
-                              RichText(
-                                text: TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text:
-                                          "${snapshot.data!.windSpeed.toStringAsFixed(0)}",
-                                      style: const TextStyle(
-                                        fontSize: 30,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    const TextSpan(
-                                      text: "km/h",
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
+                                fontWeight: FontWeight.w300, fontSize: 17)),
+                      ],
+                    ),
+                  ],
                 ),
               ),
+              Positioned(
+                bottom: 24,
+                left: 0,
+                right: 0,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Column(
+                      children: [
+                        const Text(
+                          "Umidade",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w400),
+                        ),
+                        const SizedBox(height: 8),
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: "${snapshot.data!.humidity}",
+                                style: const TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const TextSpan(
+                                text: "%",
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.w500),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        const Text(
+                          "Sens. Térmica",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w400),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          "${snapshot.data!.feelsLike.toStringAsFixed(1)}°",
+                          style: const TextStyle(
+                              fontSize: 30, fontWeight: FontWeight.bold),
+                        )
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        const Text(
+                          "Vel. Vento",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w400),
+                        ),
+                        const SizedBox(height: 8),
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text:
+                                    "${snapshot.data!.windSpeed.toStringAsFixed(0)}",
+                                style: const TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const TextSpan(
+                                text: "km/h",
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.w500),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              )
             ],
           );
         } else if (snapshot.connectionState == ConnectionState.waiting &&
