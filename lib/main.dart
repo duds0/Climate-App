@@ -1,5 +1,5 @@
-import 'package:climate_app/src/new_locations.dart';
-import 'src/home.dart';
+import 'package:climate_app/screens/new_locations.dart';
+import 'screens/home.dart';
 import 'package:flutter/material.dart';
 
 // ignore: prefer_typing_uninitialized_variables

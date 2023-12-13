@@ -1,6 +1,6 @@
-import 'package:climate_app/src/new_locations.dart';
+import 'package:climate_app/screens/new_locations.dart';
 import 'package:flutter/material.dart';
-import 'main_screen.dart';
+import '../widgets/principal_informations.dart';
 import '/main.dart';
 
 class HomePage extends StatefulWidget {

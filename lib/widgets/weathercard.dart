@@ -1,6 +1,6 @@
 import 'package:climate_app/main.dart';
-import 'package:climate_app/src/home.dart';
-import 'package:climate_app/src/services.dart';
+import 'package:climate_app/screens/home.dart';
+import 'package:climate_app/services/api_openweather.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
