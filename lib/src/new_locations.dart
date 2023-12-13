@@ -1,22 +1,12 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
+import 'package:climate_app/src/home.dart';
 import 'package:climate_app/src/services.dart';
 import 'package:climate_app/src/weathercard.dart';
 import 'package:flutter/material.dart';
 import 'package:climate_app/main.dart';
 
-class ScreenArguments {
-  var name;
-  var state;
-  var country;
-  var temp;
-  ScreenArguments(
-    this.name,
-    this.state,
-    this.country,
-    this.temp,
-  );
-}
+List items = [];
 
 class Locations extends StatefulWidget {
   const Locations({super.key});
@@ -26,17 +16,14 @@ class Locations extends StatefulWidget {
   _Locations createState() => _Locations();
 }
 
-class _Locations extends State<Locations> {
+class _Locations extends State<Locations> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   @override
   Widget build(BuildContext context) {
-    // final args = ModalRoute.of(context)?.settings.arguments as ScreenArguments;
-
-    // var undefined = "- -";
-    // var name = args.name ?? undefined;
-    // var state = args.state ?? undefined;
-    // var country = args.country ?? undefined;
-    // var temp =
-    //     args.temp != null ? "${args.temp.toStringAsFixed(1)}°" : undefined;
+    super.build(context);
+    TextEditingController textController = TextEditingController();
 
     return MaterialApp(
       theme: ThemeData.dark(),
@@ -46,8 +33,10 @@ class _Locations extends State<Locations> {
             shadowColor: Colors.transparent,
             backgroundColor: const Color(0xff1F1F1F),
             leading: IconButton(
-              onPressed: () =>
-                  {Navigator.pushReplacementNamed(context, "/home")},
+              onPressed: () => {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => HomePage()))
+              },
               icon: const Icon(Icons.arrow_back_rounded),
             )),
         body: Container(
@@ -89,18 +78,29 @@ class _Locations extends State<Locations> {
                       ),
                     ),
                   ),
-                  onSubmitted: (city) {
+                  controller: textController,
+                  onSubmitted: (city) async {
                     setState(
                       () {
                         cityValue = city;
-                        fetch(city);
+                        fetch(cityValue);
+                        textController.clear();
+                        items.add(WeatherCard(city: cityValue));
                       },
                     );
                   },
                 ),
               ),
               const SizedBox(height: 32),
-              WeatherCard(city: cityValue),
+              Expanded(
+                child: ListView.builder(
+                    itemCount: items.length,
+                    shrinkWrap: true,
+                    physics: const BouncingScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return ListTile(title: items[index]);
+                    }),
+              )
             ],
           ),
         ),
