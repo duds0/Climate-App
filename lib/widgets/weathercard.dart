@@ -15,6 +15,7 @@ class WeatherCard extends StatefulWidget {
 
 class _WeatherCard extends State<WeatherCard> {
   Future<Requests>? requests;
+  var notVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +35,7 @@ class _WeatherCard extends State<WeatherCard> {
               })
             },
             child: Container(
-              margin: const EdgeInsets.only(bottom: 16),
+              // margin: const EdgeInsets.only(bottom: 16),
               padding: const EdgeInsets.only(
                   top: 20, right: 24, bottom: 20, left: 24),
               decoration: const BoxDecoration(
@@ -81,20 +82,27 @@ class _WeatherCard extends State<WeatherCard> {
             ),
           );
         } else if (snapshot.hasError && cityValue != "") {
-          return const SizedBox(
-            height: 96,
-            child: Center(
-              child: Text(
-                "Não conseguimos encontrar essa localização 🗺️",
-                style: TextStyle(fontSize: 12),
-              ),
-            ),
-          );
-        } else if (cityValue == "") {
-          return const SizedBox(height: 96);
+          WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+            errorMessage(
+                context, "Não foi possível encontrar a sua localização");
+          });
+          return Visibility(visible: notVisible, child: const SizedBox());
         }
-        return const SizedBox();
+        return Visibility(visible: notVisible, child: const SizedBox());
       },
     );
   }
+}
+
+void errorMessage(BuildContext context, String message) {
+  final snackBar = SnackBar(
+    backgroundColor: const Color.fromARGB(255, 66, 66, 66),
+    content: Text(
+      message,
+      style: const TextStyle(color: Colors.white),
+    ),
+    duration: const Duration(seconds: 3, milliseconds: 5),
+  );
+
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }
