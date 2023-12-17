@@ -80,26 +80,29 @@ class _Locations extends State<Locations> with AutomaticKeepAliveClientMixin {
                   ),
                   controller: textController,
                   onSubmitted: (city) async {
-                    setState(
-                      () {
-                        cityValue = city;
-                        fetch(cityValue);
-                        textController.clear();
-                        items.add(WeatherCard(city: cityValue));
-                      },
-                    );
+                    if (city.isNotEmpty) {
+                      setState(
+                        () {
+                          cityValue = city;
+                          fetch(cityValue);
+                          textController.clear();
+                          items.add(WeatherCard(city: cityValue));
+                        },
+                      );
+                    }
                   },
                 ),
               ),
               const SizedBox(height: 32),
               Expanded(
                 child: ListView.builder(
-                    itemCount: items.length,
-                    shrinkWrap: true,
-                    physics: const BouncingScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return ListTile(title: items[index]);
-                    }),
+                  itemCount: items.length,
+                  shrinkWrap: true,
+                  physics: const BouncingScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return ListTile(title: items[index]);
+                  },
+                ),
               )
             ],
           ),
