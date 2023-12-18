@@ -49,6 +49,7 @@ flutter_native_splash:
   color: "#424242"
   image: "assets/app/Climate.png"
   android: true
+  delay: 3000
 
 flutter_icons:
   image_path: "assets/app/Climate.png"
