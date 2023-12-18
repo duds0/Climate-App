@@ -1,7 +1,9 @@
 import 'package:climate_app/main.dart';
 import 'package:climate_app/screens/home.dart';
 import 'package:climate_app/services/api_openweather.dart';
+import 'package:climate_app/widgets/principal_informations.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 // ignore: must_be_immutable
 class WeatherCard extends StatefulWidget {
@@ -41,30 +43,41 @@ class _WeatherCard extends State<WeatherCard> {
               decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(20)),
                   color: Color(0xff34495E)),
-              height: 96,
+              height: 120,
+              width: 200,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "${snapshot.data!.name}",
-                          style: const TextStyle(fontSize: 20),
+                          "${snapshot.data!.name} ${snapshot.data!.temp.toStringAsFixed(0)}°",
+                          style: const TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w600),
                         ),
-                        const SizedBox(height: 6),
                         Text(
                           "${snapshot.data!.state}, ${snapshot.data!.country}",
-                          style: const TextStyle(fontStyle: FontStyle.italic),
+                          style: const TextStyle(
+                              fontStyle: FontStyle.italic, fontSize: 14),
+                        ),
+                        Text(
+                          "${snapshot.data!.temp_min.toStringAsFixed(1)}° / ${snapshot.data!.temp_max.toStringAsFixed(1)}°",
+                          style: const TextStyle(
+                              fontSize: 15,
+                              fontStyle: FontStyle.italic,
+                              fontWeight: FontWeight.w500),
                         )
                       ],
                     ),
                   ),
-                  Text(
-                    "${snapshot.data!.temp.toStringAsFixed(1)}°",
-                    style: const TextStyle(fontSize: 32),
+                  Column(
+                    children: [
+                      Lottie.asset(getWeatherAnimation(snapshot.data!.icon),
+                          height: 80),
+                    ],
                   )
                 ],
               ),
