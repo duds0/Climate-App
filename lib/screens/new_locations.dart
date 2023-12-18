@@ -95,7 +95,11 @@ class _Locations extends State<Locations> with AutomaticKeepAliveClientMixin {
               ),
               const SizedBox(height: 32),
               Expanded(
-                child: ListView.builder(
+                child: ListView.separated(
+                  separatorBuilder: (BuildContext context, int index) =>
+                      const SizedBox(
+                    height: 6,
+                  ),
                   itemCount: items.length,
                   shrinkWrap: true,
                   physics: const BouncingScrollPhysics(),
@@ -103,7 +107,7 @@ class _Locations extends State<Locations> with AutomaticKeepAliveClientMixin {
                     return ListTile(title: items[index]);
                   },
                 ),
-              )
+              ),
             ],
           ),
         ),
