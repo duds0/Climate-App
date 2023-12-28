@@ -1,4 +1,4 @@
-import 'package:climate_app/main.dart';
+import 'package:climate_app/global/variables.dart';
 import 'package:climate_app/screens/home.dart';
 import 'package:climate_app/services/api_openweather.dart';
 import 'package:climate_app/widgets/principal_informations.dart';
@@ -86,7 +86,7 @@ class _WeatherCard extends State<WeatherCard> {
         } else if (snapshot.connectionState == ConnectionState.waiting &&
             cityValue != "") {
           return const SizedBox(
-            height: 96,
+            height: 120,
             child: Center(
               child: CircularProgressIndicator(
                 strokeWidth: 3,
@@ -95,13 +95,15 @@ class _WeatherCard extends State<WeatherCard> {
             ),
           );
         } else if (snapshot.hasError && cityValue != "") {
-          WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-            errorMessage(
-                context, "Não foi possível encontrar a sua localização");
-          });
-          return Visibility(visible: notVisible, child: const SizedBox());
+          WidgetsBinding.instance.addPostFrameCallback(
+            (timeStamp) {
+              errorMessage(
+                  context, "Não foi possível encontrar a sua localização");
+            },
+          );
+          return const SizedBox.shrink();
         }
-        return Visibility(visible: notVisible, child: const SizedBox());
+        return const SizedBox();
       },
     );
   }
