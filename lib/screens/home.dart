@@ -1,7 +1,7 @@
 import 'package:climate_app/screens/new_locations.dart';
 import 'package:flutter/material.dart';
 import '../widgets/principal_informations.dart';
-import '/main.dart';
+import 'package:climate_app/global/variables.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -25,15 +25,20 @@ class _Home extends State<HomePage> with AutomaticKeepAliveClientMixin {
         elevation: 0,
         actions: [
           IconButton(
-              onPressed: () => {
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => Locations()))
-                  },
-              icon: const Icon(
-                Icons.add_location_alt_outlined,
-                size: 25,
-                color: Colors.white,
-              ))
+            onPressed: () => {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Locations(),
+                ),
+              )
+            },
+            icon: const Icon(
+              Icons.add_location_alt_outlined,
+              size: 25,
+              color: Colors.white,
+            ),
+          ),
         ],
       ),
       body: Stack(
