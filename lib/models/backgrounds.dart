@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weather_animation/weather_animation.dart';
-import 'weathercard.dart';
+import 'package:climate_app/global/variables.dart';
 
 class Background extends StatefulWidget {
   const Background({super.key});

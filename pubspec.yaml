@@ -41,11 +41,15 @@ dependencies:
   lottie: ^2.6.0
   weather_animation: ^1.0.1
   flare_flutter: ^3.0.0
+  firebase_core: ^2.24.2
+  firebase_database: ^10.3.8
+  cloud_firestore: ^4.13.6
 
 flutter_native_splash:
   color: "#424242"
   image: "assets/app/Climate.png"
   android: true
+  delay: 3000
 
 flutter_icons:
   image_path: "assets/app/Climate.png"
