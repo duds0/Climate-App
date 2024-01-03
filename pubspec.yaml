@@ -44,12 +44,13 @@ dependencies:
   firebase_core: ^2.24.2
   firebase_database: ^10.3.8
   cloud_firestore: ^4.13.6
+  shared_preferences: ^2.2.2
 
 flutter_native_splash:
   color: "#424242"
   image: "assets/app/Climate.png"
   android: true
-  delay: 3000
+  delay: 1500
 
 flutter_icons:
   image_path: "assets/app/Climate.png"
