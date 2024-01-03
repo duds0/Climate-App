@@ -3,9 +3,10 @@ import 'package:climate_app/services/api_openweather.dart';
 import 'package:climate_app/widgets/weathercard.dart';
 import 'package:flutter/material.dart';
 import 'package:climate_app/global/variables.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Locations extends StatefulWidget {
-  const Locations({super.key});
+  const Locations({Key? key}) : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
@@ -13,8 +14,16 @@ class Locations extends StatefulWidget {
 }
 
 class _Locations extends State<Locations> with AutomaticKeepAliveClientMixin {
+  bool showRemoveIcon = false;
+
   @override
   bool get wantKeepAlive => true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadCitiesFromSharedPreferences();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,15 +35,26 @@ class _Locations extends State<Locations> with AutomaticKeepAliveClientMixin {
       home: Scaffold(
         backgroundColor: const Color(0xff1F1F1F),
         appBar: AppBar(
-            shadowColor: Colors.transparent,
-            backgroundColor: const Color(0xff1F1F1F),
-            leading: IconButton(
-              onPressed: () => {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => HomePage()))
+          shadowColor: Colors.transparent,
+          backgroundColor: const Color(0xff1F1F1F),
+          leading: IconButton(
+            onPressed: () => {
+              Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (context) => HomePage()))
+            },
+            icon: const Icon(Icons.arrow_back_rounded),
+          ),
+          actions: [
+            IconButton(
+              onPressed: () {
+                setState(() {
+                  showRemoveIcon = !showRemoveIcon;
+                });
               },
-              icon: const Icon(Icons.arrow_back_rounded),
-            )),
+              icon: const Icon(Icons.delete),
+            )
+          ],
+        ),
         body: Container(
           padding:
               const EdgeInsets.only(top: 8, right: 20, bottom: 8, left: 20),
@@ -82,7 +102,11 @@ class _Locations extends State<Locations> with AutomaticKeepAliveClientMixin {
                           cityValue = city;
                           fetch(cityValue);
                           textController.clear();
-                          items.add(WeatherCard(city: cityValue));
+                          items.add(WeatherCard(
+                              city: cityValue,
+                              onRemove: () => _removeCity(cityValue)));
+                          cities.add(city);
+                          _saveCitiesToSharedPreferences();
                         },
                       );
                     }
@@ -100,7 +124,18 @@ class _Locations extends State<Locations> with AutomaticKeepAliveClientMixin {
                   shrinkWrap: true,
                   physics: const BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
-                    return ListTile(title: items[index]);
+                    return ListTile(
+                      title: items[index],
+                      trailing: showRemoveIcon
+                          ? Padding(
+                              padding: const EdgeInsets.only(top: 25),
+                              child: IconButton(
+                                icon: const Icon(Icons.delete),
+                                onPressed: () => _removeCity(items[index].city),
+                              ),
+                            )
+                          : null,
+                    );
                   },
                 ),
               ),
@@ -109,5 +144,33 @@ class _Locations extends State<Locations> with AutomaticKeepAliveClientMixin {
         ),
       ),
     );
+  }
+
+//SharedPreferences Functions CRUD ->
+  Future<void> _saveCitiesToSharedPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList('cidades', cities);
+  }
+
+  Future<void> _removeCity(String city) async {
+    setState(() {
+      items.removeWhere((item) => item.city == city);
+      cities.remove(city);
+      _saveCitiesToSharedPreferences();
+    });
+  }
+
+  Future<void> _loadCitiesFromSharedPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String>? savedCities = prefs.getStringList('cidades');
+    if (savedCities != null) {
+      setState(() {
+        cities = savedCities;
+        items = cities
+            .map((city) =>
+                WeatherCard(city: city, onRemove: () => _removeCity(city)))
+            .toList();
+      });
+    }
   }
 }
