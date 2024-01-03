@@ -1,4 +1,7 @@
-# Climate App
+![ClimateApp-MKT](https://github.com/duds0/Climate-App/assets/121513090/b4ceba47-b1ec-4e75-a6b0-7dbcfa706bdd)
+
+
+# ClimateApp
 
 *Welcome to ClimateApp, a sublime experience that turns the simple quest for weather into a captivating journey. Crafted with the elegance of Flutter, this app is the perfect bridge between you and the weather conditions of your city.*
 
@@ -13,4 +16,3 @@ Thanks to seamless integration with the latest weather forecasting technologies,
 
 *Discover the power of simplicity combined with sophistication in ClimateApp Flutter. Transform the way you interact with weather conditions and make time a magical experience with every touch.*
 #
-![ClimateApp-MKT](https://github.com/duds0/Climate-App/assets/121513090/b4ceba47-b1ec-4e75-a6b0-7dbcfa706bdd)
