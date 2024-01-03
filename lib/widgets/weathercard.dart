@@ -38,19 +38,18 @@ class _WeatherCard extends State<WeatherCard> {
               })
             },
             child: Container(
-              // margin: const EdgeInsets.only(bottom: 16),
               padding: const EdgeInsets.only(
                   top: 20, right: 24, bottom: 20, left: 24),
               decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(20)),
                   color: Color(0xff34495E)),
-
               height: 120,
               width: 200,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
+                    width: 150,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,

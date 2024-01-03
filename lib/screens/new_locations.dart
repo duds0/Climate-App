@@ -118,13 +118,14 @@ class _Locations extends State<Locations> with AutomaticKeepAliveClientMixin {
                 child: ListView.separated(
                   separatorBuilder: (BuildContext context, int index) =>
                       const SizedBox(
-                    height: 6,
+                    height: 8,
                   ),
                   itemCount: items.length,
                   shrinkWrap: true,
                   physics: const BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
                     return ListTile(
+                      contentPadding: EdgeInsets.symmetric(horizontal: 0),
                       title: items[index],
                       trailing: showRemoveIcon
                           ? Padding(
