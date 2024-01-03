@@ -7,8 +7,9 @@ import 'package:lottie/lottie.dart';
 
 // ignore: must_be_immutable
 class WeatherCard extends StatefulWidget {
-  WeatherCard({super.key, required this.city});
   String city;
+  final VoidCallback onRemove;
+  WeatherCard({super.key, required this.city, required this.onRemove});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -43,6 +44,7 @@ class _WeatherCard extends State<WeatherCard> {
               decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(20)),
                   color: Color(0xff34495E)),
+
               height: 120,
               width: 200,
               child: Row(
