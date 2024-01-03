@@ -1,4 +1,4 @@
-![ClimateApp-MKT](https://github.com/duds0/Climate-App/assets/121513090/b4ceba47-b1ec-4e75-a6b0-7dbcfa706bdd)
+![ClimateApp-MKT2](https://github.com/duds0/Climate-App/assets/121513090/269a27f0-3999-4875-9ae7-3fe285ff77d3)
 
 
 # ClimateApp
