@@ -56,26 +56,29 @@ class _Locations extends State<Locations> with AutomaticKeepAliveClientMixin {
           ],
         ),
         body: Container(
-          padding:
-              const EdgeInsets.only(top: 8, right: 20, bottom: 8, left: 20),
+          // padding:
+          //     const EdgeInsets.only(top: 8, right: 20, bottom: 8, left: 20),
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "Suas cidades",
-                style: TextStyle(fontSize: 30),
+              Container(
+                padding: const EdgeInsets.only(top: 8, left: 20),
+                child: const Text(
+                  "Suas cidades",
+                  style: TextStyle(fontSize: 30),
+                ),
               ),
               const SizedBox(height: 32),
-              SizedBox(
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 height: 56,
                 child: TextField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.search),
                     filled: true,
                     fillColor: Color(0xff323232),
-                    // prefixIcon: Icon(Icons.search),
                     labelStyle:
                         TextStyle(color: Color(0xff797979), fontSize: 17),
                     labelText: "Digite seu local",
@@ -114,30 +117,31 @@ class _Locations extends State<Locations> with AutomaticKeepAliveClientMixin {
                 ),
               ),
               const SizedBox(height: 32),
-              Expanded(
-                child: ListView.separated(
-                  separatorBuilder: (BuildContext context, int index) =>
-                      const SizedBox(
-                    height: 8,
-                  ),
-                  itemCount: items.length,
-                  shrinkWrap: true,
-                  physics: const BouncingScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      contentPadding: EdgeInsets.symmetric(horizontal: 0),
-                      title: items[index],
-                      trailing: showRemoveIcon
-                          ? Padding(
-                              padding: const EdgeInsets.only(top: 25),
-                              child: IconButton(
-                                icon: const Icon(Icons.delete),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Expanded(
+                  child: ListView.separated(
+                    separatorBuilder: (BuildContext context, int index) =>
+                        const SizedBox(
+                      height: 8,
+                    ),
+                    itemCount: items.length,
+                    shrinkWrap: true,
+                    physics: const BouncingScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        contentPadding: EdgeInsets.symmetric(horizontal: 0),
+                        title: items[index],
+                        trailing: showRemoveIcon
+                            ? IconButton(
+                                icon: const Icon(Icons.delete,
+                                    color: Colors.redAccent),
                                 onPressed: () => _removeCity(items[index].city),
-                              ),
-                            )
-                          : null,
-                    );
-                  },
+                              )
+                            : null,
+                      );
+                    },
+                  ),
                 ),
               ),
             ],
