@@ -9,7 +9,12 @@ import 'package:lottie/lottie.dart';
 class WeatherCard extends StatefulWidget {
   String city;
   final VoidCallback onRemove;
-  WeatherCard({super.key, required this.city, required this.onRemove});
+
+  WeatherCard({
+    super.key,
+    required this.city,
+    required this.onRemove,
+  });
 
   @override
   // ignore: library_private_types_in_public_api
@@ -18,10 +23,12 @@ class WeatherCard extends StatefulWidget {
 
 class _WeatherCard extends State<WeatherCard> {
   Future<Requests>? requests;
-  var notVisible = false;
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double textContainer = (screenWidth - 160) * 0.7;
+
     requests = fetch(widget.city);
 
     return FutureBuilder<Requests>(
@@ -43,15 +50,12 @@ class _WeatherCard extends State<WeatherCard> {
               decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(20)),
                   color: Color(0xff34495E)),
-              height: 120,
-              width: 200,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    color: Colors.white38,
+                  SizedBox(
+                    width: textContainer,
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
@@ -59,11 +63,13 @@ class _WeatherCard extends State<WeatherCard> {
                           style: const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.w600),
                         ),
+                        const SizedBox(height: 6),
                         Text(
                           "${snapshot.data!.state}, ${snapshot.data!.country}",
                           style: const TextStyle(
                               fontStyle: FontStyle.italic, fontSize: 14),
                         ),
+                        const SizedBox(height: 6),
                         Text(
                           "${snapshot.data!.temp_min.toStringAsFixed(1)}° / ${snapshot.data!.temp_max.toStringAsFixed(1)}°",
                           style: const TextStyle(
@@ -76,8 +82,12 @@ class _WeatherCard extends State<WeatherCard> {
                   ),
                   Column(
                     children: [
-                      Lottie.asset(getWeatherAnimation(snapshot.data!.icon),
-                          height: 80),
+                      SizedBox(
+                        width: 80,
+                        child: Lottie.asset(
+                          getWeatherAnimation(snapshot.data!.icon),
+                        ),
+                      )
                     ],
                   )
                 ],
