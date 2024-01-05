@@ -14,7 +14,7 @@ class Locations extends StatefulWidget {
 }
 
 class _Locations extends State<Locations> with AutomaticKeepAliveClientMixin {
-  bool showRemoveIcon = false;
+  bool iconController = false;
 
   @override
   bool get wantKeepAlive => true;
@@ -48,16 +48,14 @@ class _Locations extends State<Locations> with AutomaticKeepAliveClientMixin {
             IconButton(
               onPressed: () {
                 setState(() {
-                  showRemoveIcon = !showRemoveIcon;
+                  iconController = !iconController;
                 });
               },
               icon: const Icon(Icons.delete),
             )
           ],
         ),
-        body: Container(
-          // padding:
-          //     const EdgeInsets.only(top: 8, right: 20, bottom: 8, left: 20),
+        body: SizedBox(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           child: Column(
@@ -118,7 +116,8 @@ class _Locations extends State<Locations> with AutomaticKeepAliveClientMixin {
               ),
               const SizedBox(height: 32),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding:
+                    EdgeInsets.only(left: 16, right: iconController ? 0 : 16),
                 child: Expanded(
                   child: ListView.separated(
                     separatorBuilder: (BuildContext context, int index) =>
@@ -130,9 +129,10 @@ class _Locations extends State<Locations> with AutomaticKeepAliveClientMixin {
                     physics: const BouncingScrollPhysics(),
                     itemBuilder: (context, index) {
                       return ListTile(
-                        contentPadding: EdgeInsets.symmetric(horizontal: 0),
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 0),
                         title: items[index],
-                        trailing: showRemoveIcon
+                        trailing: iconController
                             ? IconButton(
                                 icon: const Icon(Icons.delete,
                                     color: Colors.redAccent),
