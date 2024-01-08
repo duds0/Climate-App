@@ -174,8 +174,8 @@ backgroundAnimation(String? icon) {
 
     case "04d":
       return const WrapperScene(colors: [
-        Color(0xff3d5afe),
-        Color(0xff2196f3)
+        Color(0xff808080),
+        Color(0xffB0C4DE),
       ], children: [
         CloudWidget(
           cloudConfig: CloudConfig(
