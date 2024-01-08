@@ -115,10 +115,10 @@ class _Locations extends State<Locations> with AutomaticKeepAliveClientMixin {
                 ),
               ),
               const SizedBox(height: 32),
-              Container(
-                padding:
-                    EdgeInsets.only(left: 16, right: iconController ? 0 : 16),
-                child: Expanded(
+              Expanded(
+                child: Container(
+                  padding:
+                      EdgeInsets.only(left: 16, right: iconController ? 0 : 16),
                   child: ListView.separated(
                     separatorBuilder: (BuildContext context, int index) =>
                         const SizedBox(
