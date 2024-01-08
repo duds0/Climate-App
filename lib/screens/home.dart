@@ -43,7 +43,7 @@ class _Home extends State<HomePage> with AutomaticKeepAliveClientMixin {
       ),
       body: Stack(
         children: [
-          MainScreen(
+          PrincipalInformations(
             city: cityValue,
           ),
         ],

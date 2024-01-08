@@ -5,20 +5,20 @@ import 'package:climate_app/global/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-class MainScreen extends StatefulWidget {
+class PrincipalInformations extends StatefulWidget {
   final String city;
 
-  const MainScreen({
+  const PrincipalInformations({
     super.key,
     required this.city,
   });
 
   @override
   // ignore: library_private_types_in_public_api
-  _MainScreen createState() => _MainScreen();
+  _PrincipalInformations createState() => _PrincipalInformations();
 }
 
-class _MainScreen extends State<MainScreen> {
+class _PrincipalInformations extends State<PrincipalInformations> {
   Future<Requests>? requests;
 
   @override
