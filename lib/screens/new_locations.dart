@@ -154,7 +154,7 @@ class _Locations extends State<Locations> with AutomaticKeepAliveClientMixin {
 //SharedPreferences Functions CRUD ->
   Future<void> _saveCitiesToSharedPreferences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setStringList('cidades', cities);
+    await prefs.setStringList('cities', cities);
   }
 
   Future<void> _removeCity(String city) async {
@@ -167,7 +167,7 @@ class _Locations extends State<Locations> with AutomaticKeepAliveClientMixin {
 
   Future<void> _loadCitiesFromSharedPreferences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String>? savedCities = prefs.getStringList('cidades');
+    List<String>? savedCities = prefs.getStringList('cities');
     if (savedCities != null) {
       setState(() {
         cities = savedCities;
