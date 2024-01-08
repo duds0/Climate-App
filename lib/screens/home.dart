@@ -1,4 +1,4 @@
-import 'package:climate_app/screens/new_locations.dart';
+import 'package:climate_app/screens/locations.dart';
 import 'package:flutter/material.dart';
 import '../widgets/principal_informations.dart';
 import 'package:climate_app/global/variables.dart';
