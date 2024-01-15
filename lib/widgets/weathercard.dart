@@ -63,13 +63,13 @@ class _WeatherCard extends State<WeatherCard> {
                           style: const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.w600),
                         ),
-                        const SizedBox(height: 6),
+                        const SizedBox(height: 4),
                         Text(
                           "${snapshot.data!.state}, ${snapshot.data!.country}",
                           style: const TextStyle(
                               fontStyle: FontStyle.italic, fontSize: 14),
                         ),
-                        const SizedBox(height: 6),
+                        const SizedBox(height: 4),
                         Text(
                           "${snapshot.data!.temp_min.toStringAsFixed(1)}° / ${snapshot.data!.temp_max.toStringAsFixed(1)}°",
                           style: const TextStyle(
