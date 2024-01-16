@@ -1,3 +1,4 @@
+import 'package:climate_app/global/variables.dart';
 import 'package:climate_app/screens/locations.dart';
 import 'package:climate_app/widgets/principal_informations.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,15 @@ class _Home extends State<HomePage> with AutomaticKeepAliveClientMixin {
   Widget build(BuildContext context) {
     super.build(context);
 
+    void toggleHomePageController() {
+      setState(() {
+        if (isFirstTimePressed) {
+          homePageController = !homePageController;
+          isFirstTimePressed = false;
+        }
+      });
+    }
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -32,13 +42,14 @@ class _Home extends State<HomePage> with AutomaticKeepAliveClientMixin {
         elevation: 0,
         actions: [
           IconButton(
-            onPressed: () => {
+            onPressed: () {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (context) => Locations(),
                 ),
-              )
+              );
+              toggleHomePageController();
             },
             icon: const Icon(
               Icons.add_location_alt_outlined,
@@ -64,9 +75,11 @@ class _Home extends State<HomePage> with AutomaticKeepAliveClientMixin {
 
             return Stack(
               children: [
-                PrincipalInformations(
-                  city: firstCity,
-                ),
+                homePageController
+                    ? PrincipalInformations(
+                        city: firstCity,
+                      )
+                    : PrincipalInformations(city: cityValue)
               ],
             );
           }
