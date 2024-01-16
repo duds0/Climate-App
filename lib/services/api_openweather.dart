@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, non_constant_identifier_names
 
+import 'dart:async';
 import 'dart:convert';
 import 'package:climate_app/global/variables.dart';
 import 'package:http/http.dart' as http;
@@ -15,6 +16,9 @@ Future<Requests> fetch(city) async {
 
   var urlWeatherInfos =
       "https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=95b9027fe9d1f6c19c6b21c7a2d3f521&units=metric&lang=pt_br";
+
+  await Future.delayed(const Duration(seconds: 2));
+
   var response0 = await http.get(Uri.parse(urlWeatherInfos));
   var jsonWeatherInfos = jsonDecode(response0.body);
 
