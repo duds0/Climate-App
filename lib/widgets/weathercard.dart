@@ -37,12 +37,12 @@ class _WeatherCard extends State<WeatherCard> {
         if (snapshot.hasData &&
             snapshot.connectionState == ConnectionState.done) {
           return InkWell(
-            onTap: () => {
+            onTap: () {
               Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (context) => HomePage())),
+                  context, MaterialPageRoute(builder: (context) => HomePage()));
               setState(() {
                 cityValue = snapshot.data!.name;
-              })
+              });
             },
             child: Container(
               padding: const EdgeInsets.only(
