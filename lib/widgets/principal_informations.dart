@@ -185,7 +185,7 @@ class _PrincipalInformations extends State<PrincipalInformations> {
             Background(),
             Center(
                 child: Text(
-              "Não há nada aqui.",
+              "Por favor, adicione sua(s) cidade(s)",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w300),
             ))
           ]);
