@@ -1,6 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 import 'package:climate_app/services/api_openweather.dart';
-import 'backgrounds.dart';
+import '../animations/backgrounds.dart';
 import 'package:climate_app/global/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
