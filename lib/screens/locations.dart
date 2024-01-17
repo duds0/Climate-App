@@ -122,7 +122,7 @@ class _Locations extends State<Locations> with AutomaticKeepAliveClientMixin {
                   child: ListView.separated(
                     separatorBuilder: (BuildContext context, int index) =>
                         const SizedBox(
-                      height: 8,
+                      height: 2,
                     ),
                     itemCount: items.length,
                     shrinkWrap: true,
