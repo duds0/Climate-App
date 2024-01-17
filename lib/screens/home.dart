@@ -63,10 +63,8 @@ class _Home extends State<HomePage> with AutomaticKeepAliveClientMixin {
         future: _loadCitiesFromSharedPreferences(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            // Indicador de carregamento, caso necessário.
             return const CircularProgressIndicator();
           } else if (snapshot.hasError) {
-            // Tratar erro, caso necessário.
             return Text('Erro: ${snapshot.error}');
           } else {
             List<String> savedCities = snapshot.data!;
