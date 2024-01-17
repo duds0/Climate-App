@@ -45,54 +45,57 @@ class _WeatherCard extends State<WeatherCard> {
               });
             },
             child: Container(
-              padding: const EdgeInsets.only(
-                  top: 20, right: 24, bottom: 20, left: 24),
-              decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                  color: Color(0xff34495E)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: textContainer,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                padding: const EdgeInsets.only(
+                    top: 20, right: 24, bottom: 20, left: 24),
+                decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                    color: Color(0xff34495E)),
+                child: Stack(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          "${snapshot.data!.name} ${snapshot.data!.temp.toStringAsFixed(0)}°",
-                          style: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w600),
+                        SizedBox(
+                          width: textContainer,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "${snapshot.data!.name} ${snapshot.data!.temp.toStringAsFixed(0)}°",
+                                style: const TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.w600),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                "${snapshot.data!.state}, ${snapshot.data!.country}",
+                                style: const TextStyle(
+                                    fontStyle: FontStyle.italic, fontSize: 14),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                "${snapshot.data!.temp_min.toStringAsFixed(1)}° / ${snapshot.data!.temp_max.toStringAsFixed(1)}°",
+                                style: const TextStyle(
+                                    fontSize: 15,
+                                    fontStyle: FontStyle.italic,
+                                    fontWeight: FontWeight.w500),
+                              )
+                            ],
+                          ),
                         ),
-                        const SizedBox(height: 4),
-                        Text(
-                          "${snapshot.data!.state}, ${snapshot.data!.country}",
-                          style: const TextStyle(
-                              fontStyle: FontStyle.italic, fontSize: 14),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          "${snapshot.data!.temp_min.toStringAsFixed(1)}° / ${snapshot.data!.temp_max.toStringAsFixed(1)}°",
-                          style: const TextStyle(
-                              fontSize: 15,
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.w500),
+                        Column(
+                          children: [
+                            SizedBox(
+                              width: 80,
+                              child: Lottie.asset(
+                                getWeatherAnimation(snapshot.data!.icon),
+                              ),
+                            )
+                          ],
                         )
                       ],
                     ),
-                  ),
-                  Column(
-                    children: [
-                      SizedBox(
-                        width: 80,
-                        child: Lottie.asset(
-                          getWeatherAnimation(snapshot.data!.icon),
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ),
+                  ],
+                )),
           );
         } else if (snapshot.connectionState == ConnectionState.waiting &&
             cityValue != "") {
