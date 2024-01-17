@@ -181,14 +181,39 @@ class _PrincipalInformations extends State<PrincipalInformations> {
           );
         } else if (cityValue == "") {
           icon = "initial";
-          return Stack(children: [
-            Background(),
-            Center(
-                child: Text(
-              "Por favor, adicione sua(s) cidade(s)",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w300),
-            ))
-          ]);
+          return Stack(
+            children: [
+              Background(),
+              const Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(
+                      strokeWidth: 3,
+                      color: Color(0xffffffff),
+                    ),
+                    SizedBox(height: 16),
+                    Text("Aguarde",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w300)),
+                    SizedBox(height: 32),
+                  ],
+                ),
+              ),
+              Positioned(
+                bottom: 24,
+                child: Container(
+                  padding: const EdgeInsets.only(left: 4, right: 4),
+                  width: MediaQuery.of(context).size.width,
+                  child: const Text(
+                    "Caso não haja uma cidade, por favor, acrescente uma",
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              )
+            ],
+          );
         }
         return const SizedBox();
       },
