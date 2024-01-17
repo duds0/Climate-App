@@ -1,24 +1,24 @@
 // ignore_for_file: non_constant_identifier_names
 import 'package:climate_app/services/api_openweather.dart';
-import 'backgrounds.dart';
+import '../animations/backgrounds.dart';
 import 'package:climate_app/global/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-class MainScreen extends StatefulWidget {
+class PrincipalInformations extends StatefulWidget {
   final String city;
 
-  const MainScreen({
+  const PrincipalInformations({
     super.key,
     required this.city,
   });
 
   @override
   // ignore: library_private_types_in_public_api
-  _MainScreen createState() => _MainScreen();
+  _PrincipalInformations createState() => _PrincipalInformations();
 }
 
-class _MainScreen extends State<MainScreen> {
+class _PrincipalInformations extends State<PrincipalInformations> {
   Future<Requests>? requests;
 
   @override
@@ -181,14 +181,39 @@ class _MainScreen extends State<MainScreen> {
           );
         } else if (cityValue == "") {
           icon = "initial";
-          return Stack(children: [
-            Background(),
-            Center(
-                child: Text(
-              "Não há nada aqui.",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w300),
-            ))
-          ]);
+          return Stack(
+            children: [
+              Background(),
+              const Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(
+                      strokeWidth: 3,
+                      color: Color(0xffffffff),
+                    ),
+                    SizedBox(height: 16),
+                    Text("Aguarde",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w300)),
+                    SizedBox(height: 32),
+                  ],
+                ),
+              ),
+              Positioned(
+                bottom: 24,
+                child: Container(
+                  padding: const EdgeInsets.only(left: 4, right: 4),
+                  width: MediaQuery.of(context).size.width,
+                  child: const Text(
+                    "Caso não haja uma cidade, por favor, acrescente uma",
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              )
+            ],
+          );
         }
         return const SizedBox();
       },

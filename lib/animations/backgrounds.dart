@@ -18,7 +18,7 @@ class _Background extends State<Background> {
         SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
-            child: backgroundAnimation(icon))
+            child: backgroundAnimation(icon)),
       ],
     );
   }
@@ -174,8 +174,8 @@ backgroundAnimation(String? icon) {
 
     case "04d":
       return const WrapperScene(colors: [
-        Color(0xff3d5afe),
-        Color(0xff2196f3)
+        Color(0xff6083BB),
+        Color(0xff96B2DE),
       ], children: [
         CloudWidget(
           cloudConfig: CloudConfig(
@@ -379,7 +379,53 @@ backgroundAnimation(String? icon) {
       return WeatherScene.stormy.sceneWidget;
 
     case "13d" || "13n":
-      return WeatherScene.showerSleet.sceneWidget;
+      return const WrapperScene(
+        isLeftCornerGradient: true,
+        colors: [
+          Color(0xff37474f),
+          Color(0xff90a4ae),
+          Color(0xff607d8b),
+          Color(0xff78909c),
+        ],
+        children: [
+          CloudWidget(
+            cloudConfig: CloudConfig(
+              size: 250,
+              color: Color(0xa8fafafa),
+              x: 20,
+              y: 25,
+              scaleBegin: 1,
+              scaleEnd: 1.08,
+              slideX: 20,
+              slideY: 0,
+              slideDurMill: 3000,
+            ),
+          ),
+          CloudWidget(
+            cloudConfig: CloudConfig(
+              size: 160,
+              color: Color(0xa8fafafa),
+              x: 140,
+              y: 120,
+              scaleBegin: 1,
+              scaleEnd: 1.1,
+              slideX: 20,
+              slideY: 4,
+              slideDurMill: 2000,
+            ),
+          ),
+          SnowWidget(
+            snowConfig: SnowConfig(
+              count: 56,
+              size: 16,
+              color: Color(0xb3ffffff),
+              areaXStart: 24,
+              areaXEnd: 215,
+              areaYEnd: 700,
+            ),
+          ),
+        ],
+      );
 
     case "50d" || "50n":
       return const WrapperScene(colors: [
@@ -411,7 +457,7 @@ backgroundAnimation(String? icon) {
             size: 250,
             color: Color(0xad90a4ae),
             x: 30,
-            y: 100,
+            y: 100 - 60,
             slideX: 20,
             slideY: 0,
           ),
@@ -421,7 +467,7 @@ backgroundAnimation(String? icon) {
             size: 160,
             color: Color(0xb1607d8b),
             x: 160,
-            y: 200,
+            y: 200 - 60,
             slideY: 4,
           ),
         ),

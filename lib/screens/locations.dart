@@ -14,7 +14,7 @@ class Locations extends StatefulWidget {
 }
 
 class _Locations extends State<Locations> with AutomaticKeepAliveClientMixin {
-  bool showRemoveIcon = false;
+  bool iconController = false;
 
   @override
   bool get wantKeepAlive => true;
@@ -48,34 +48,35 @@ class _Locations extends State<Locations> with AutomaticKeepAliveClientMixin {
             IconButton(
               onPressed: () {
                 setState(() {
-                  showRemoveIcon = !showRemoveIcon;
+                  iconController = !iconController;
                 });
               },
               icon: const Icon(Icons.delete),
             )
           ],
         ),
-        body: Container(
-          padding:
-              const EdgeInsets.only(top: 8, right: 20, bottom: 8, left: 20),
+        body: SizedBox(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "Suas cidades",
-                style: TextStyle(fontSize: 30),
+              Container(
+                padding: const EdgeInsets.only(top: 8, left: 20),
+                child: const Text(
+                  "Suas cidades",
+                  style: TextStyle(fontSize: 30),
+                ),
               ),
               const SizedBox(height: 32),
-              SizedBox(
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 height: 56,
                 child: TextField(
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.search),
                     filled: true,
                     fillColor: Color(0xff323232),
-                    // prefixIcon: Icon(Icons.search),
                     labelStyle:
                         TextStyle(color: Color(0xff797979), fontSize: 17),
                     labelText: "Digite seu local",
@@ -115,28 +116,32 @@ class _Locations extends State<Locations> with AutomaticKeepAliveClientMixin {
               ),
               const SizedBox(height: 32),
               Expanded(
-                child: ListView.separated(
-                  separatorBuilder: (BuildContext context, int index) =>
-                      const SizedBox(
-                    height: 6,
-                  ),
-                  itemCount: items.length,
-                  shrinkWrap: true,
-                  physics: const BouncingScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: items[index],
-                      trailing: showRemoveIcon
-                          ? Padding(
-                              padding: const EdgeInsets.only(top: 25),
-                              child: IconButton(
-                                icon: const Icon(Icons.delete),
+                child: Container(
+                  padding:
+                      EdgeInsets.only(left: 16, right: iconController ? 0 : 16),
+                  child: ListView.separated(
+                    separatorBuilder: (BuildContext context, int index) =>
+                        const SizedBox(
+                      height: 2,
+                    ),
+                    itemCount: items.length,
+                    shrinkWrap: true,
+                    physics: const BouncingScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 0),
+                        title: items[index],
+                        trailing: iconController
+                            ? IconButton(
+                                icon: const Icon(Icons.delete,
+                                    color: Colors.redAccent),
                                 onPressed: () => _removeCity(items[index].city),
-                              ),
-                            )
-                          : null,
-                    );
-                  },
+                              )
+                            : null,
+                      );
+                    },
+                  ),
                 ),
               ),
             ],
@@ -149,7 +154,7 @@ class _Locations extends State<Locations> with AutomaticKeepAliveClientMixin {
 //SharedPreferences Functions CRUD ->
   Future<void> _saveCitiesToSharedPreferences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setStringList('cidades', cities);
+    await prefs.setStringList('cities', cities);
   }
 
   Future<void> _removeCity(String city) async {
@@ -162,7 +167,7 @@ class _Locations extends State<Locations> with AutomaticKeepAliveClientMixin {
 
   Future<void> _loadCitiesFromSharedPreferences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String>? savedCities = prefs.getStringList('cidades');
+    List<String>? savedCities = prefs.getStringList('cities');
     if (savedCities != null) {
       setState(() {
         cities = savedCities;
