@@ -38,6 +38,7 @@ class _Home extends State<HomePage> with AutomaticKeepAliveClientMixin {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
+        forceMaterialTransparency: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: [
@@ -52,8 +53,8 @@ class _Home extends State<HomePage> with AutomaticKeepAliveClientMixin {
               toggleHomePageController();
             },
             icon: const Icon(
-              Icons.add_location_alt_outlined,
-              size: 25,
+              Icons.add,
+              size: 32,
               color: Colors.white,
             ),
           ),
