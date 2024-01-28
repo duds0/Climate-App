@@ -24,6 +24,8 @@ class _PrincipalInformations extends State<PrincipalInformations> {
   @override
   Widget build(BuildContext context) {
     requests = fetch(widget.city);
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
 
     return FutureBuilder<Requests>(
       future: requests,
@@ -34,120 +36,181 @@ class _PrincipalInformations extends State<PrincipalInformations> {
           return Stack(
             children: [
               Background(),
-              Center(
+              SingleChildScrollView(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Column(
-                      children: [
-                        Lottie.asset(getWeatherAnimation(icon), height: 150),
-                        Text(
-                          "${snapshot.data!.temp.toStringAsFixed(0)}°",
-                          style: const TextStyle(
-                              fontSize: 48, fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          "${snapshot.data!.name}",
-                          style: const TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.w500),
-                        ),
-                        const SizedBox(height: 2),
-                        Text(
-                            "${snapshot.data!.state}, ${snapshot.data!.country}",
-                            style:
-                                const TextStyle(fontStyle: FontStyle.italic)),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        Text(
-                            firstLetterToUpperCase(
-                                "${snapshot.data!.description}"),
-                            style: const TextStyle(
-                                fontWeight: FontWeight.w300, fontSize: 17)),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              Positioned(
-                bottom: 24,
-                left: 0,
-                right: 0,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Column(
-                      children: [
-                        const Text(
-                          "Umidade",
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w400),
-                        ),
-                        const SizedBox(height: 8),
-                        RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text: "${snapshot.data!.humidity}",
-                                style: const TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold,
+                    SizedBox(
+                      height: screenHeight,
+                      width: screenWidth,
+                      child: Column(
+                        // mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: screenHeight * 0.35,
+                                  // color: Colors.amber,
                                 ),
+                                Lottie.asset(getWeatherAnimation(icon),
+                                    height: 150),
+                                Text(
+                                  "${snapshot.data!.temp.toStringAsFixed(0)}°",
+                                  style: TextStyle(
+                                    fontSize: 48,
+                                    fontWeight: FontWeight.bold,
+                                    shadows: [
+                                      Shadow(
+                                          offset: const Offset(1, 1),
+                                          blurRadius: 2,
+                                          color: Colors.grey.withOpacity(0.5))
+                                    ],
+                                  ),
+                                ),
+                                Text(
+                                  "${snapshot.data!.name}",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                    shadows: [
+                                      Shadow(
+                                          offset: const Offset(1, 1),
+                                          blurRadius: 2,
+                                          color: Colors.grey.withOpacity(0.5))
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(height: 2),
+                                Text(
+                                    "${snapshot.data!.state}, ${snapshot.data!.country}",
+                                    style: TextStyle(
+                                        fontStyle: FontStyle.italic,
+                                        shadows: [
+                                          Shadow(
+                                              offset: const Offset(1, 1),
+                                              blurRadius: 2,
+                                              color:
+                                                  Colors.grey.withOpacity(0.5))
+                                        ])),
+                                const SizedBox(
+                                  height: 8,
+                                ),
+                                Text(
+                                  firstLetterToUpperCase(
+                                      "${snapshot.data!.description}"),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w300,
+                                    fontSize: 17,
+                                    shadows: [
+                                      Shadow(
+                                          offset: const Offset(1, 1),
+                                          blurRadius: 2,
+                                          color: Colors.grey.withOpacity(0.5))
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: screenHeight * 0.15),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Column(
+                                children: [
+                                  const Text(
+                                    "Umidade",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  RichText(
+                                    text: TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text: "${snapshot.data!.humidity}",
+                                          style: const TextStyle(
+                                            fontSize: 30,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        const TextSpan(
+                                          text: "%",
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
-                              const TextSpan(
-                                text: "%",
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.w500),
+                              Column(
+                                children: [
+                                  const Text(
+                                    "Sens. Térmica",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    "${snapshot.data!.feelsLike.toStringAsFixed(1)}°",
+                                    style: const TextStyle(
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.bold),
+                                  )
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  const Text(
+                                    "Vel. Vento",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  RichText(
+                                    text: TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text:
+                                              "${snapshot.data!.windSpeed.toStringAsFixed(0)}",
+                                          style: const TextStyle(
+                                            fontSize: 30,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        const TextSpan(
+                                          text: "km/h",
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        const Text(
-                          "Sens. Térmica",
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w400),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          "${snapshot.data!.feelsLike.toStringAsFixed(1)}°",
-                          style: const TextStyle(
-                              fontSize: 30, fontWeight: FontWeight.bold),
-                        )
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        const Text(
-                          "Vel. Vento",
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w400),
-                        ),
-                        const SizedBox(height: 8),
-                        RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text:
-                                    "${snapshot.data!.windSpeed.toStringAsFixed(0)}",
-                                style: const TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              const TextSpan(
-                                text: "km/h",
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.w500),
-                              ),
-                            ],
+                          SizedBox(
+                            height: screenHeight * 0.02,
                           ),
-                        ),
-                      ],
+                          const Icon(Icons.arrow_drop_down_sharp)
+                        ],
+                      ),
                     ),
+                    SizedBox(
+                      height: screenHeight * 0.35,
+                      width: screenWidth,
+                      child: Column(
+                        children: [Text("Cidade")],
+                      ),
+                    )
                   ],
                 ),
               )
