@@ -3,6 +3,7 @@ List<String> cities = [];
 List items = [];
 bool homePageController = true;
 bool isFirstTimePressed = true;
+var cityName;
 var icon = "initial";
 var snap;
 var requests;
