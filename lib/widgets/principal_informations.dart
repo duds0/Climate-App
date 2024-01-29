@@ -1,9 +1,11 @@
 // ignore_for_file: non_constant_identifier_names
+import 'dart:ui';
 import 'package:climate_app/services/api_openweather.dart';
 import '../animations/backgrounds.dart';
 import 'package:climate_app/global/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:climate_app/widgets/forecast_card.dart';
 
 class PrincipalInformations extends StatefulWidget {
   final String city;
@@ -204,13 +206,34 @@ class _PrincipalInformations extends State<PrincipalInformations> {
                         ],
                       ),
                     ),
-                    SizedBox(
-                      height: screenHeight * 0.35,
-                      width: screenWidth,
-                      child: Column(
-                        children: [Text("Cidade")],
+                    Container(
+                      margin: const EdgeInsets.only(
+                          top: 24, bottom: 24, left: 16, right: 16),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                          gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                Colors.white.withOpacity(0.3),
+                                Colors.white.withOpacity(0.2),
+                                Colors.white.withOpacity(0.3),
+                                Colors.white.withOpacity(0.2),
+                                Colors.white.withOpacity(0.3),
+                              ])),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(16),
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 8, horizontal: 8),
+                            color: Colors.black.withOpacity(0.1),
+                            child: ForecastCard(),
+                          ),
+                        ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               )
