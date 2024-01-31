@@ -35,8 +35,7 @@ class _Locations extends State<Locations> with AutomaticKeepAliveClientMixin {
       home: Scaffold(
         backgroundColor: const Color(0xff1F1F1F),
         appBar: AppBar(
-          shadowColor: Colors.transparent,
-          backgroundColor: const Color(0xff1F1F1F),
+          forceMaterialTransparency: true,
           leading: IconButton(
             onPressed: () => {
               Navigator.pushReplacement(
