@@ -9,13 +9,14 @@ Future fetchForecast() async {
   var response = await http.get(Uri.parse(url));
   var json = jsonDecode(response.body);
   List<Map<String, dynamic>> dailyForecasts = [];
-  String date = DateTime.now().toString();
+  String completedDate = DateTime.now().toString();
+  String date = completedDate.split(" ")[0];
 
   for (var item in json["list"]) {
     String dateStr = item["dt_txt"].split(' ')[0];
     int hour = int.parse(item["dt_txt"].split(' ')[1].split(':')[0]);
 
-    if (hour >= 12 && date != dateStr) {
+    if (date != dateStr && hour >= 12) {
       if (!dailyForecasts.any((forecast) => forecast['date'] == dateStr)) {
         dailyForecasts.add({
           'date': dateStr,
