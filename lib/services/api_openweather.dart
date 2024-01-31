@@ -11,8 +11,8 @@ Future<Requests> fetch(city) async {
   var response = await http.get(Uri.parse(urlCoordInfos));
   var jsonCoordInfos = jsonDecode(response.body);
 
-  var lat = jsonCoordInfos[0]["lat"];
-  var lon = jsonCoordInfos[0]["lon"];
+  lat = jsonCoordInfos[0]["lat"];
+  lon = jsonCoordInfos[0]["lon"];
 
   var urlWeatherInfos =
       "https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=95b9027fe9d1f6c19c6b21c7a2d3f521&units=metric&lang=pt_br";
