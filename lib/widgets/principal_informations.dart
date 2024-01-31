@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 import 'dart:ui';
 import 'package:climate_app/services/api_openweather.dart';
+import 'package:climate_app/services/forecast_api.dart';
 import '../animations/backgrounds.dart';
 import 'package:climate_app/global/variables.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +36,7 @@ class _PrincipalInformations extends State<PrincipalInformations> {
         if (snapshot.hasData &&
             snapshot.connectionState == ConnectionState.done) {
           snap = snapshot;
+          fetchForecast();
           return Stack(
             children: [
               Background(),
@@ -115,89 +117,36 @@ class _PrincipalInformations extends State<PrincipalInformations> {
                               ],
                             ),
                           ),
-                          SizedBox(height: screenHeight * 0.15),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Column(
-                                children: [
-                                  const Text(
-                                    "Umidade",
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  RichText(
-                                    text: TextSpan(
-                                      children: [
-                                        TextSpan(
-                                          text: "${snapshot.data!.humidity}",
-                                          style: const TextStyle(
-                                            fontSize: 30,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        const TextSpan(
-                                          text: "%",
-                                          style: TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
+                          SizedBox(height: screenHeight * 0.1),
+                          Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 16),
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: Colors.black.withOpacity(0.0000001),
+                                    width: 0.5),
+                                borderRadius: BorderRadius.circular(16),
+                                gradient: LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors: [
+                                      Colors.white.withOpacity(0.4),
+                                      Colors.white.withOpacity(0.2),
+                                      Colors.white.withOpacity(0.4),
+                                      Colors.white.withOpacity(0.2),
+                                      Colors.white.withOpacity(0.4),
+                                    ])),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(16),
+                              child: BackdropFilter(
+                                filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 8, horizontal: 8),
+                                  color: Colors.black.withOpacity(0.2),
+                                  child: ForecastCard(),
+                                ),
                               ),
-                              Column(
-                                children: [
-                                  const Text(
-                                    "Sens. Térmica",
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    "${snapshot.data!.feelsLike.toStringAsFixed(1)}°",
-                                    style: const TextStyle(
-                                        fontSize: 30,
-                                        fontWeight: FontWeight.bold),
-                                  )
-                                ],
-                              ),
-                              Column(
-                                children: [
-                                  const Text(
-                                    "Vel. Vento",
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  RichText(
-                                    text: TextSpan(
-                                      children: [
-                                        TextSpan(
-                                          text:
-                                              "${snapshot.data!.windSpeed.toStringAsFixed(0)}",
-                                          style: const TextStyle(
-                                            fontSize: 30,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        const TextSpan(
-                                          text: "km/h",
-                                          style: TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                            ),
                           ),
                           SizedBox(
                             height: screenHeight * 0.02,
@@ -207,31 +156,85 @@ class _PrincipalInformations extends State<PrincipalInformations> {
                       ),
                     ),
                     Container(
-                      margin: const EdgeInsets.only(
-                          top: 24, bottom: 24, left: 16, right: 16),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                                Colors.white.withOpacity(0.3),
-                                Colors.white.withOpacity(0.2),
-                                Colors.white.withOpacity(0.3),
-                                Colors.white.withOpacity(0.2),
-                                Colors.white.withOpacity(0.3),
-                              ])),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(16),
-                        child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 8),
-                            color: Colors.black.withOpacity(0.1),
-                            child: ForecastCard(),
+                      padding: const EdgeInsets.only(bottom: 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Column(
+                            children: [
+                              const Text(
+                                "Umidade",
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w400),
+                              ),
+                              const SizedBox(height: 8),
+                              RichText(
+                                text: TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: "${snapshot.data!.humidity}",
+                                      style: const TextStyle(
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const TextSpan(
+                                      text: "%",
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
+                          Column(
+                            children: [
+                              const Text(
+                                "Sens. Térmica",
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w400),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                "${snapshot.data!.feelsLike.toStringAsFixed(1)}°",
+                                style: const TextStyle(
+                                    fontSize: 30, fontWeight: FontWeight.bold),
+                              )
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              const Text(
+                                "Vel. Vento",
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w400),
+                              ),
+                              const SizedBox(height: 8),
+                              RichText(
+                                text: TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text:
+                                          "${snapshot.data!.windSpeed.toStringAsFixed(0)}",
+                                      style: const TextStyle(
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const TextSpan(
+                                      text: "km/h",
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                   ],
