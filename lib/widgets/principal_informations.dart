@@ -1,7 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 import 'dart:ui';
 import 'package:climate_app/services/api_openweather.dart';
-import 'package:climate_app/services/forecast_api.dart';
 import '../animations/backgrounds.dart';
 import 'package:climate_app/global/variables.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +35,6 @@ class _PrincipalInformations extends State<PrincipalInformations> {
         if (snapshot.hasData &&
             snapshot.connectionState == ConnectionState.done) {
           snap = snapshot;
-          fetchForecast();
           return Stack(
             children: [
               Background(),
@@ -47,7 +45,6 @@ class _PrincipalInformations extends State<PrincipalInformations> {
                       height: screenHeight,
                       width: screenWidth,
                       child: Column(
-                        // mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           SizedBox(
@@ -55,7 +52,6 @@ class _PrincipalInformations extends State<PrincipalInformations> {
                               children: [
                                 Container(
                                   height: screenHeight * 0.35,
-                                  // color: Colors.amber,
                                 ),
                                 Lottie.asset(getWeatherAnimation(icon),
                                     height: 150),
