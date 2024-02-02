@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 List<String> cities = [];
-List<String> dates = [];
 List items = [];
 bool homePageController = true;
 bool isFirstTimePressed = true;
