@@ -121,6 +121,8 @@ class _PrincipalInformations extends State<PrincipalInformations> {
                                 margin:
                                     const EdgeInsets.symmetric(horizontal: 16),
                                 decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: Colors.white.withOpacity(0.1)),
                                     borderRadius: BorderRadius.circular(16),
                                     color: Colors.white.withOpacity(0.1),
                                     gradient: const LinearGradient(
