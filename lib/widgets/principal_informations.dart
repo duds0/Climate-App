@@ -114,33 +114,28 @@ class _PrincipalInformations extends State<PrincipalInformations> {
                             ),
                           ),
                           SizedBox(height: screenHeight * 0.1),
-                          Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 16),
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: Colors.black.withOpacity(0.0000001),
-                                    width: 0.5),
-                                borderRadius: BorderRadius.circular(16),
-                                gradient: LinearGradient(
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                    colors: [
-                                      Colors.white.withOpacity(0.4),
-                                      Colors.white.withOpacity(0.2),
-                                      Colors.white.withOpacity(0.4),
-                                      Colors.white.withOpacity(0.2),
-                                      Colors.white.withOpacity(0.4),
-                                    ])),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(16),
-                              child: BackdropFilter(
-                                filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 8, horizontal: 8),
-                                  color: Colors.black.withOpacity(0.2),
-                                  child: ForecastCard(),
+                          ClipRRect(
+                            child: BackdropFilter(
+                              filter: ImageFilter.blur(sigmaX: 40, sigmaY: 40),
+                              child: Container(
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 16),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16),
+                                    color: Colors.white.withOpacity(0.1),
+                                    gradient: const LinearGradient(
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                        colors: [
+                                          Colors.white,
+                                          Colors.black,
+                                          Colors.white,
+                                        ])),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 8,
+                                  horizontal: 16,
                                 ),
+                                child: ForecastCard(),
                               ),
                             ),
                           ),
