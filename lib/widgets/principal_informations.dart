@@ -1,11 +1,13 @@
 // ignore_for_file: non_constant_identifier_names
-import 'dart:ui';
 import 'package:climate_app/services/api_openweather.dart';
+import 'package:climate_app/widgets/additional_informations.dart';
+import 'package:climate_app/widgets/center_informations.dart';
+import 'package:climate_app/widgets/error_tratament_load.dart';
+import 'package:climate_app/widgets/frosted_glass.dart';
+import 'package:climate_app/widgets/initial.dart';
 import '../animations/backgrounds.dart';
 import 'package:climate_app/global/variables.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
-import 'package:climate_app/widgets/forecast_card.dart';
 
 class PrincipalInformations extends StatefulWidget {
   final String city;
@@ -26,8 +28,6 @@ class _PrincipalInformations extends State<PrincipalInformations> {
   @override
   Widget build(BuildContext context) {
     requests = fetch(widget.city);
-    double screenHeight = MediaQuery.of(context).size.height;
-    double screenWidth = MediaQuery.of(context).size.width;
 
     return FutureBuilder<Requests>(
       future: requests,
@@ -38,264 +38,62 @@ class _PrincipalInformations extends State<PrincipalInformations> {
           return Stack(
             children: [
               Background(),
-              SingleChildScrollView(
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: screenHeight,
-                      width: screenWidth,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            child: Column(
-                              children: [
-                                Container(
-                                  height: screenHeight * 0.35,
-                                ),
-                                Lottie.asset(getWeatherAnimation(icon),
-                                    height: 150),
-                                Text(
-                                  "${snapshot.data!.temp.toStringAsFixed(0)}°",
-                                  style: TextStyle(
-                                    fontSize: 48,
-                                    fontWeight: FontWeight.bold,
-                                    shadows: [
-                                      Shadow(
-                                          offset: const Offset(1, 1),
-                                          blurRadius: 2,
-                                          color: Colors.grey.withOpacity(0.5))
-                                    ],
-                                  ),
-                                ),
-                                Text(
-                                  "${snapshot.data!.name}",
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w500,
-                                    shadows: [
-                                      Shadow(
-                                          offset: const Offset(1, 1),
-                                          blurRadius: 2,
-                                          color: Colors.grey.withOpacity(0.5))
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(height: 2),
-                                Text(
-                                    "${snapshot.data!.state}, ${snapshot.data!.country}",
-                                    style: TextStyle(
-                                        fontStyle: FontStyle.italic,
-                                        shadows: [
-                                          Shadow(
-                                              offset: const Offset(1, 1),
-                                              blurRadius: 2,
-                                              color:
-                                                  Colors.grey.withOpacity(0.5))
-                                        ])),
-                                const SizedBox(
-                                  height: 8,
-                                ),
-                                Text(
-                                  firstLetterToUpperCase(
-                                      "${snapshot.data!.description}"),
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w300,
-                                    fontSize: 17,
-                                    shadows: [
-                                      Shadow(
-                                          offset: const Offset(1, 1),
-                                          blurRadius: 2,
-                                          color: Colors.grey.withOpacity(0.5))
-                                    ],
-                                  ),
-                                ),
-                              ],
+              CenterInformations(
+                cityName: snapshot.data!.name,
+                country: snapshot.data!.country,
+                description: snapshot.data!.description,
+                icon: icon,
+                state: snap.data.state,
+                temp: snapshot.data!.temp,
+              ),
+              Positioned(
+                bottom: 16,
+                left: 0,
+                right: 0,
+                child: SizedBox(
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.only(bottom: 16),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            AdditionalInformations(
+                              description: "Umidade",
+                              content: "${snapshot.data!.humidity}",
+                              unitOfMeasurement: "%",
                             ),
-                          ),
-                          SizedBox(height: screenHeight * 0.1),
-                          ClipRRect(
-                            child: BackdropFilter(
-                              filter: ImageFilter.blur(sigmaX: 40, sigmaY: 40),
-                              child: Container(
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 16),
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: Colors.white.withOpacity(0.1)),
-                                    borderRadius: BorderRadius.circular(16),
-                                    color: Colors.white.withOpacity(0.1),
-                                    gradient: const LinearGradient(
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                        colors: [
-                                          Colors.white,
-                                          Colors.black,
-                                          Colors.white,
-                                        ])),
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 8,
-                                  horizontal: 16,
-                                ),
-                                child: ForecastCard(),
-                              ),
+                            AdditionalInformations(
+                              description: "Sens. Térmica",
+                              content:
+                                  "${snapshot.data!.feelsLike.toStringAsFixed(1)}°",
                             ),
-                          ),
-                          SizedBox(
-                            height: screenHeight * 0.02,
-                          ),
-                          const Icon(Icons.arrow_drop_down_sharp)
-                        ],
+                            AdditionalInformations(
+                              description: "Vel. Vento",
+                              content:
+                                  "${snapshot.data!.windSpeed.toStringAsFixed(0)}",
+                              unitOfMeasurement: "km/h",
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.only(bottom: 16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Column(
-                            children: [
-                              const Text(
-                                "Umidade",
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w400),
-                              ),
-                              const SizedBox(height: 8),
-                              RichText(
-                                text: TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: "${snapshot.data!.humidity}",
-                                      style: const TextStyle(
-                                        fontSize: 30,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    const TextSpan(
-                                      text: "%",
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              const Text(
-                                "Sens. Térmica",
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w400),
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                "${snapshot.data!.feelsLike.toStringAsFixed(1)}°",
-                                style: const TextStyle(
-                                    fontSize: 30, fontWeight: FontWeight.bold),
-                              )
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              const Text(
-                                "Vel. Vento",
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w400),
-                              ),
-                              const SizedBox(height: 8),
-                              RichText(
-                                text: TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text:
-                                          "${snapshot.data!.windSpeed.toStringAsFixed(0)}",
-                                      style: const TextStyle(
-                                        fontSize: 30,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    const TextSpan(
-                                      text: "km/h",
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                      const FrostedGlass(),
+                    ],
+                  ),
                 ),
-              )
+              ),
             ],
           );
         } else if (snapshot.connectionState == ConnectionState.waiting &&
             cityValue != "") {
-          return Stack(
-            children: [
-              Background(),
-              Center(
-                child: CircularProgressIndicator(
-                  strokeWidth: 3,
-                  color: Color(0xffffffff),
-                ),
-              ),
-            ],
-          );
+          return const Load();
         } else if (snapshot.hasError && cityValue != "") {
           icon = "initial";
-          return Stack(
-            children: [
-              Background(),
-              Center(
-                child: Text(
-                  "Não conseguimos encontrar essa localização 🗺️",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
-                ),
-              ),
-            ],
-          );
         } else if (cityValue == "") {
           icon = "initial";
-          return Stack(
-            children: [
-              Background(),
-              const Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircularProgressIndicator(
-                      strokeWidth: 3,
-                      color: Color(0xffffffff),
-                    ),
-                    SizedBox(height: 16),
-                    Text("Aguarde",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w300)),
-                    SizedBox(height: 32),
-                  ],
-                ),
-              ),
-              Positioned(
-                bottom: 24,
-                child: Container(
-                  padding: const EdgeInsets.only(left: 4, right: 4),
-                  width: MediaQuery.of(context).size.width,
-                  child: const Text(
-                    "Caso não haja uma cidade, por favor, acrescente uma",
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              )
-            ],
-          );
+          return Initial(
+              bottomText: "Não adcionou uma cidade? Por favor, adcione uma!",
+              centerText: "Aguarde");
         }
         return const SizedBox();
       },
