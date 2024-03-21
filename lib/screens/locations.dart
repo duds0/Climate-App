@@ -113,7 +113,7 @@ class _Locations extends State<Locations> with AutomaticKeepAliveClientMixin {
                   },
                 ),
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 16),
               Expanded(
                 child: Container(
                   padding:
