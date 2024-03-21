@@ -35,6 +35,26 @@ class _PrincipalInformations extends State<PrincipalInformations> {
         if (snapshot.hasData &&
             snapshot.connectionState == ConnectionState.done) {
           snap = snapshot;
+
+          //Timestamp formatting
+          String zeroFix(int tStamp) {
+            return tStamp.toString().padLeft(2, '0');
+          }
+
+          int sunriseTimestamp = snapshot.data!.sunrise;
+          int sunsetTimestamp = snapshot.data!.sunset;
+
+          DateTime sunriseDateTime =
+              DateTime.fromMillisecondsSinceEpoch(sunriseTimestamp * 1000);
+          DateTime sunsetDateTime =
+              DateTime.fromMillisecondsSinceEpoch(sunsetTimestamp * 1000);
+
+          // Formatando os horários
+          String sunriseTime =
+              '${zeroFix(sunriseDateTime.hour)}:${zeroFix(sunriseDateTime.minute)}';
+          String sunsetTime =
+              '${zeroFix(sunsetDateTime.hour)}:${zeroFix(sunsetDateTime.minute)}';
+
           return Stack(
             children: [
               Background(),
@@ -54,25 +74,39 @@ class _PrincipalInformations extends State<PrincipalInformations> {
                   child: Column(
                     children: [
                       Container(
-                        padding: const EdgeInsets.only(bottom: 16),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        height: 72,
+                        child: ListView(
+                          physics: const BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
                           children: [
-                            AdditionalInformations(
-                              description: "Umidade",
-                              content: "${snapshot.data!.humidity}",
-                              unitOfMeasurement: "%",
-                            ),
                             AdditionalInformations(
                               description: "Sens. Térmica",
                               content:
                                   "${snapshot.data!.feelsLike.toStringAsFixed(1)}°",
                             ),
                             AdditionalInformations(
+                              description: "Umidade",
+                              content: "${snapshot.data!.humidity}",
+                              unitOfMeasurement: "%",
+                            ),
+                            AdditionalInformations(
                               description: "Vel. Vento",
                               content:
                                   "${snapshot.data!.windSpeed.toStringAsFixed(0)}",
                               unitOfMeasurement: "km/h",
+                            ),
+                            AdditionalInformations(
+                              description: "Pressão",
+                              content: "${snapshot.data!.pressure}",
+                              unitOfMeasurement: "hPa",
+                            ),
+                            AdditionalInformations(
+                              description: "Nascer do Sol",
+                              content: sunriseTime,
+                            ),
+                            AdditionalInformations(
+                              description: "Pôr do Sol",
+                              content: sunsetTime,
                             ),
                           ],
                         ),
