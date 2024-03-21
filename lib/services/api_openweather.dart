@@ -36,6 +36,9 @@ Future<Requests> fetch(city) async {
     humidity: jsonWeatherInfos["main"]["humidity"],
     windSpeed: jsonWeatherInfos["wind"]["speed"],
     feelsLike: jsonWeatherInfos["main"]["feels_like"],
+    pressure: jsonWeatherInfos["main"]["pressure"],
+    sunrise: jsonWeatherInfos["sys"]["sunrise"],
+    sunset: jsonWeatherInfos["sys"]["sunset"],
   );
 
   return requests;
@@ -53,6 +56,9 @@ class Requests {
   final humidity;
   final windSpeed;
   final feelsLike;
+  final pressure;
+  final sunrise;
+  final sunset;
 
   Requests({
     required this.name,
@@ -66,5 +72,8 @@ class Requests {
     required this.humidity,
     required this.windSpeed,
     required this.feelsLike,
+    required this.pressure,
+    required this.sunrise,
+    required this.sunset,
   });
 }
