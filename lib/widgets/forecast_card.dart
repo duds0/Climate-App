@@ -1,7 +1,6 @@
 import "package:climate_app/services/forecast_api.dart";
-import "package:climate_app/widgets/principal_informations.dart";
+import "package:climate_app/widgets/forecast_informations.dart";
 import "package:flutter/material.dart";
-import "package:lottie/lottie.dart";
 
 class ForecastCard extends StatefulWidget {
   const ForecastCard({Key? key}) : super(key: key);
@@ -24,110 +23,30 @@ class _ForecastCard extends State<ForecastCard> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      snapshot.data![0]["weekDay"],
-                      style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.italic),
-                    ),
-                    const SizedBox(height: 8),
-                    Lottie.asset(getWeatherAnimation(snapshot.data![0]["icon"]),
-                        height: 40),
-                    const SizedBox(height: 2),
-                    Text(
-                      "${snapshot.data![0]["averageTemp"].toStringAsFixed(1)}°",
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.w500),
-                    )
-                  ],
+                ForecastInformations(
+                  weekDay: snapshot.data![0]["weekDay"],
+                  icon: snapshot.data[0]["icon"],
+                  averageTemp: snapshot.data![0]["averageTemp"],
                 ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      snapshot.data![1]["weekDay"],
-                      style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.italic),
-                    ),
-                    const SizedBox(height: 8),
-                    Lottie.asset(getWeatherAnimation(snapshot.data![1]["icon"]),
-                        height: 40),
-                    const SizedBox(height: 2),
-                    Text(
-                      "${snapshot.data![1]["averageTemp"].toStringAsFixed(1)}°",
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.w500),
-                    )
-                  ],
+                ForecastInformations(
+                  weekDay: snapshot.data![1]["weekDay"],
+                  icon: snapshot.data[1]["icon"],
+                  averageTemp: snapshot.data![1]["averageTemp"],
                 ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      snapshot.data![2]["weekDay"],
-                      style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.italic),
-                    ),
-                    const SizedBox(height: 8),
-                    Lottie.asset(getWeatherAnimation(snapshot.data![2]["icon"]),
-                        height: 40),
-                    const SizedBox(height: 2),
-                    Text(
-                      "${snapshot.data![2]["averageTemp"].toStringAsFixed(1)}°",
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.w500),
-                    )
-                  ],
+                ForecastInformations(
+                  weekDay: snapshot.data![2]["weekDay"],
+                  icon: snapshot.data[2]["icon"],
+                  averageTemp: snapshot.data![2]["averageTemp"],
                 ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      snapshot.data![3]["weekDay"],
-                      style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.italic),
-                    ),
-                    const SizedBox(height: 8),
-                    Lottie.asset(getWeatherAnimation(snapshot.data![3]["icon"]),
-                        height: 40),
-                    const SizedBox(height: 2),
-                    Text(
-                      "${snapshot.data![3]["averageTemp"].toStringAsFixed(1)}°",
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.w500),
-                    )
-                  ],
+                ForecastInformations(
+                  weekDay: snapshot.data![3]["weekDay"],
+                  icon: snapshot.data[3]["icon"],
+                  averageTemp: snapshot.data![3]["averageTemp"],
                 ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      snapshot.data![4]["weekDay"],
-                      style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.italic),
-                    ),
-                    const SizedBox(height: 8),
-                    Lottie.asset(getWeatherAnimation(snapshot.data![4]["icon"]),
-                        height: 40),
-                    const SizedBox(height: 2),
-                    Text(
-                      "${snapshot.data![4]["averageTemp"].toStringAsFixed(1)}°",
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.w500),
-                    )
-                  ],
+                ForecastInformations(
+                  weekDay: snapshot.data![4]["weekDay"],
+                  icon: snapshot.data[4]["icon"],
+                  averageTemp: snapshot.data![4]["averageTemp"],
                 ),
               ],
             ),
