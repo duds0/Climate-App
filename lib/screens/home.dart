@@ -1,6 +1,7 @@
 import 'package:climate_app/global/variables.dart';
 import 'package:climate_app/screens/locations.dart';
 import 'package:climate_app/widgets/principal_informations.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -66,8 +67,8 @@ class _Home extends State<HomePage> with AutomaticKeepAliveClientMixin {
           actions: [
             IconButton(
               onPressed: () {
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => const Locations()));
+                Navigator.of(context).pushReplacement(CupertinoPageRoute(
+                    builder: (context) => const Locations()));
 
                 toggleHomePageController();
               },

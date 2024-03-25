@@ -1,6 +1,7 @@
 import 'package:climate_app/screens/home.dart';
 import 'package:climate_app/services/api_openweather.dart';
 import 'package:climate_app/widgets/weathercard.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:climate_app/global/variables.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -32,8 +33,8 @@ class _Locations extends State<Locations> with AutomaticKeepAliveClientMixin {
 
     return WillPopScope(
       onWillPop: () async {
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => const HomePage()));
+        Navigator.pushReplacement(context,
+            CupertinoPageRoute(builder: (context) => const HomePage()));
         return false;
       },
       child: MaterialApp(
@@ -45,7 +46,7 @@ class _Locations extends State<Locations> with AutomaticKeepAliveClientMixin {
             leading: IconButton(
               onPressed: () => {
                 Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => const HomePage()))
+                    CupertinoPageRoute(builder: (context) => const HomePage()))
               },
               icon: const Icon(Icons.arrow_back_rounded),
             ),
