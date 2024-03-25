@@ -49,7 +49,6 @@ class _PrincipalInformations extends State<PrincipalInformations> {
           DateTime sunsetDateTime =
               DateTime.fromMillisecondsSinceEpoch(sunsetTimestamp * 1000);
 
-          // Formatando os horários
           String sunriseTime =
               '${zeroFix(sunriseDateTime.hour)}:${zeroFix(sunriseDateTime.minute)}';
           String sunsetTime =
