@@ -2,6 +2,7 @@ import 'package:climate_app/global/variables.dart';
 import 'package:climate_app/screens/home.dart';
 import 'package:climate_app/services/api_openweather.dart';
 import 'package:climate_app/widgets/principal_informations.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -38,8 +39,8 @@ class _WeatherCard extends State<WeatherCard> {
             snapshot.connectionState == ConnectionState.done) {
           return InkWell(
             onTap: () {
-              Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (context) => HomePage()));
+              Navigator.pushReplacement(context,
+                  CupertinoPageRoute(builder: (context) => const HomePage()));
               setState(() {
                 cityValue = snapshot.data!.name;
               });

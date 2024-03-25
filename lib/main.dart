@@ -18,8 +18,8 @@ class _MyApp extends State<MyApp> {
       theme: ThemeData.dark(),
       initialRoute: "/home",
       routes: {
-        "/home": (context) => HomePage(),
-        "/new_locations": (context) => Locations(),
+        "/home": (context) => const HomePage(),
+        "/new_locations": (context) => const Locations(),
       },
     );
   }
