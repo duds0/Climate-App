@@ -44,12 +44,9 @@ class _Home extends State<HomePage> with AutomaticKeepAliveClientMixin {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Locations(),
-                ),
-              );
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => Locations()));
+
               toggleHomePageController();
             },
             icon: const Icon(
