@@ -38,8 +38,8 @@ class _WeatherCard extends State<WeatherCard> {
             snapshot.connectionState == ConnectionState.done) {
           return InkWell(
             onTap: () {
-              Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (context) => HomePage()));
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => const HomePage()));
               setState(() {
                 cityValue = snapshot.data!.name;
               });

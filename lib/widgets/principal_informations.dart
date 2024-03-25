@@ -57,7 +57,7 @@ class _PrincipalInformations extends State<PrincipalInformations> {
 
           return Stack(
             children: [
-              Background(),
+              const Background(),
               CenterInformations(
                 cityName: snapshot.data!.name,
                 country: snapshot.data!.country,
@@ -73,7 +73,7 @@ class _PrincipalInformations extends State<PrincipalInformations> {
                 child: SizedBox(
                   child: Column(
                     children: [
-                      Container(
+                      SizedBox(
                         height: 72,
                         child: ListView(
                           physics: const BouncingScrollPhysics(),

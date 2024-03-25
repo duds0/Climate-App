@@ -33,7 +33,7 @@ class _Locations extends State<Locations> with AutomaticKeepAliveClientMixin {
     return WillPopScope(
       onWillPop: () async {
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
+            context, MaterialPageRoute(builder: (context) => const HomePage()));
         return false;
       },
       child: MaterialApp(
@@ -45,7 +45,7 @@ class _Locations extends State<Locations> with AutomaticKeepAliveClientMixin {
             leading: IconButton(
               onPressed: () => {
                 Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => HomePage()))
+                    MaterialPageRoute(builder: (context) => const HomePage()))
               },
               icon: const Icon(Icons.arrow_back_rounded),
             ),

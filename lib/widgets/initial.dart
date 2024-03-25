@@ -16,7 +16,7 @@ class Initial extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Background(),
+        const Background(),
         Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

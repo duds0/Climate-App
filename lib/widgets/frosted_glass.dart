@@ -29,7 +29,7 @@ class FrostedGlass extends StatelessWidget {
             vertical: 8,
             horizontal: 16,
           ),
-          child: ForecastCard(),
+          child: const ForecastCard(),
         ),
       ),
     );
