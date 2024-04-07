@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:climate_app/widgets/forecast_card.dart';
 import 'package:flutter/material.dart';
 
