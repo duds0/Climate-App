@@ -2,7 +2,7 @@
 import 'package:climate_app/services/api_openweather.dart';
 import 'package:climate_app/widgets/additional_informations.dart';
 import 'package:climate_app/widgets/center_informations.dart';
-import 'package:climate_app/widgets/error_tratament_load.dart';
+import 'package:climate_app/widgets/shimmer_effect.dart';
 import 'package:climate_app/widgets/frosted_glass.dart';
 import 'package:climate_app/widgets/initial.dart';
 import '../animations/backgrounds.dart';
