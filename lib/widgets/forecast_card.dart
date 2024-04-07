@@ -52,8 +52,9 @@ class _ForecastCard extends State<ForecastCard> {
             ),
           );
         }
-        return const SizedBox(
-          child: Center(
+        return Container(
+          padding: const EdgeInsets.symmetric(vertical: 30),
+          child: const Center(
             child: CircularProgressIndicator(
               strokeWidth: 3,
               color: Colors.white,
