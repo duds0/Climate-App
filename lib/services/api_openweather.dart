@@ -11,8 +11,8 @@ Future<Requests> fetch(city) async {
   var response = await http.get(Uri.parse(urlCoordInfos));
   var jsonCoordInfos = jsonDecode(response.body);
 
-  lat = jsonCoordInfos[0]["lat"];
-  lon = jsonCoordInfos[0]["lon"];
+  var lat = jsonCoordInfos[0]["lat"];
+  var lon = jsonCoordInfos[0]["lon"];
 
   var urlWeatherInfos =
       "https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=95b9027fe9d1f6c19c6b21c7a2d3f521&units=metric&lang=pt_br";
@@ -36,9 +36,6 @@ Future<Requests> fetch(city) async {
     humidity: jsonWeatherInfos["main"]["humidity"],
     windSpeed: jsonWeatherInfos["wind"]["speed"],
     feelsLike: jsonWeatherInfos["main"]["feels_like"],
-    pressure: jsonWeatherInfos["main"]["pressure"],
-    sunrise: jsonWeatherInfos["sys"]["sunrise"],
-    sunset: jsonWeatherInfos["sys"]["sunset"],
   );
 
   return requests;
@@ -56,9 +53,6 @@ class Requests {
   final humidity;
   final windSpeed;
   final feelsLike;
-  final pressure;
-  final sunrise;
-  final sunset;
 
   Requests({
     required this.name,
@@ -72,8 +66,5 @@ class Requests {
     required this.humidity,
     required this.windSpeed,
     required this.feelsLike,
-    required this.pressure,
-    required this.sunrise,
-    required this.sunset,
   });
 }
