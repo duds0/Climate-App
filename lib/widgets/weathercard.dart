@@ -1,9 +1,11 @@
 import 'package:climate_app/global/variables.dart';
 import 'package:climate_app/screens/home.dart';
-import 'package:climate_app/services/api_openweather.dart';
+import 'package:climate_app/services/current_data_api.dart';
 import 'package:climate_app/widgets/principal_informations.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shimmer/shimmer.dart';
 
 // ignore: must_be_immutable
 class WeatherCard extends StatefulWidget {
@@ -38,8 +40,8 @@ class _WeatherCard extends State<WeatherCard> {
             snapshot.connectionState == ConnectionState.done) {
           return InkWell(
             onTap: () {
-              Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (context) => HomePage()));
+              Navigator.pushReplacement(context,
+                  CupertinoPageRoute(builder: (context) => const HomePage()));
               setState(() {
                 cityValue = snapshot.data!.name;
               });
@@ -96,12 +98,15 @@ class _WeatherCard extends State<WeatherCard> {
           );
         } else if (snapshot.connectionState == ConnectionState.waiting &&
             cityValue != "") {
-          return const SizedBox(
+          return SizedBox(
             height: 120,
-            child: Center(
-              child: CircularProgressIndicator(
-                strokeWidth: 3,
-                color: Color(0xffffffff),
+            child: Shimmer.fromColors(
+              baseColor: Colors.white.withOpacity(0.2),
+              highlightColor: Colors.grey.withOpacity(0.2),
+              child: Container(
+                decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                    color: Colors.white),
               ),
             ),
           );
