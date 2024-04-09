@@ -6,49 +6,36 @@ class ForecastCard extends StatefulWidget {
   const ForecastCard({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
-  _ForecastCard createState() => _ForecastCard();
+  _ForecastCardState createState() => _ForecastCardState();
 }
 
-class _ForecastCard extends State<ForecastCard> {
+class _ForecastCardState extends State<ForecastCard> {
+  late Future<List<Map<String, dynamic>>> future;
+
+  @override
+  void initState() {
+    super.initState();
+    future = fetchForecast();
+  }
+
   @override
   Widget build(BuildContext context) {
-    Future future = fetchForecast();
-    return FutureBuilder(
+    return FutureBuilder<List<Map<String, dynamic>>>(
       future: future,
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
+      builder: (BuildContext context,
+          AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
         if (snapshot.connectionState == ConnectionState.done &&
             snapshot.hasData) {
           return SizedBox(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ForecastInformations(
-                  weekDay: snapshot.data![0]["weekDay"],
-                  icon: snapshot.data[0]["icon"],
-                  averageTemp: snapshot.data![0]["averageTemp"],
-                ),
-                ForecastInformations(
-                  weekDay: snapshot.data![1]["weekDay"],
-                  icon: snapshot.data[1]["icon"],
-                  averageTemp: snapshot.data![1]["averageTemp"],
-                ),
-                ForecastInformations(
-                  weekDay: snapshot.data![2]["weekDay"],
-                  icon: snapshot.data[2]["icon"],
-                  averageTemp: snapshot.data![2]["averageTemp"],
-                ),
-                ForecastInformations(
-                  weekDay: snapshot.data![3]["weekDay"],
-                  icon: snapshot.data[3]["icon"],
-                  averageTemp: snapshot.data![3]["averageTemp"],
-                ),
-                ForecastInformations(
-                  weekDay: snapshot.data![4]["weekDay"],
-                  icon: snapshot.data[4]["icon"],
-                  averageTemp: snapshot.data![4]["averageTemp"],
-                ),
-              ],
+              children: snapshot.data!
+                  .map((data) => ForecastInformations(
+                        weekDay: data["weekDay"],
+                        icon: data["icon"],
+                        averageTemp: data["averageTemp"],
+                      ))
+                  .toList(),
             ),
           );
         }

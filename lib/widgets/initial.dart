@@ -1,16 +1,15 @@
 import 'package:climate_app/animations/backgrounds.dart';
 import 'package:flutter/material.dart';
 
-// ignore: must_be_immutable
 class Initial extends StatelessWidget {
-  Initial({
-    super.key,
-    required this.bottomText,
-    required this.centerText,
-  });
+  final String centerText;
+  final String bottomText;
 
-  String centerText;
-  String bottomText;
+  const Initial({
+    Key? key,
+    required this.centerText,
+    required this.bottomText,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,17 +25,23 @@ class Initial extends StatelessWidget {
                 color: Color(0xffffffff),
               ),
               const SizedBox(height: 16),
-              Text(centerText,
-                  style: const TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.w300)),
+              Text(
+                centerText,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w300,
+                ),
+              ),
               const SizedBox(height: 32),
             ],
           ),
         ),
         Positioned(
           bottom: 24,
+          left: 0,
+          right: 0,
           child: Container(
-            padding: const EdgeInsets.only(left: 4, right: 4),
+            padding: const EdgeInsets.symmetric(horizontal: 4),
             width: MediaQuery.of(context).size.width,
             child: Text(
               bottomText,
@@ -44,7 +49,7 @@ class Initial extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ),
-        )
+        ),
       ],
     );
   }

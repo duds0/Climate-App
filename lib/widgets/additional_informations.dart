@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 
-// ignore: must_be_immutable
 class AdditionalInformations extends StatelessWidget {
-  AdditionalInformations({
-    super.key,
-    required this.content,
-    required this.description,
-    this.unitOfMeasurement,
-  });
+  final String description;
+  final String content;
+  final String? unitOfMeasurement;
 
-  String description;
-  String content;
-  String? unitOfMeasurement;
+  const AdditionalInformations({
+    Key? key,
+    required this.description,
+    required this.content,
+    this.unitOfMeasurement,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,11 +33,14 @@ class AdditionalInformations extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                TextSpan(
-                  text: unitOfMeasurement,
-                  style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.w500),
-                ),
+                if (unitOfMeasurement != null)
+                  TextSpan(
+                    text: unitOfMeasurement!,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
               ],
             ),
           ),
