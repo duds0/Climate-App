@@ -1,6 +1,6 @@
 import 'package:climate_app/global/variables.dart';
 import 'package:climate_app/screens/home.dart';
-import 'package:climate_app/services/api_openweather.dart';
+import 'package:climate_app/services/current_data_api.dart';
 import 'package:climate_app/widgets/principal_informations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

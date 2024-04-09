@@ -1,5 +1,5 @@
 // ignore_for_file: non_constant_identifier_names
-import 'package:climate_app/services/api_openweather.dart';
+import 'package:climate_app/services/current_data_api.dart';
 import 'package:climate_app/widgets/additional_informations.dart';
 import 'package:climate_app/widgets/center_informations.dart';
 import 'package:climate_app/widgets/shimmer_effect.dart';
