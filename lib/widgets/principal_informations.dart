@@ -1,9 +1,13 @@
 // ignore_for_file: non_constant_identifier_names
-import 'package:climate_app/services/api_openweather.dart';
+import 'package:climate_app/services/current_data_api.dart';
+import 'package:climate_app/widgets/additional_informations.dart';
+import 'package:climate_app/widgets/center_informations.dart';
+import 'package:climate_app/widgets/shimmer_effect.dart';
+import 'package:climate_app/widgets/frosted_glass.dart';
+import 'package:climate_app/widgets/initial.dart';
 import '../animations/backgrounds.dart';
 import 'package:climate_app/global/variables.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 
 class PrincipalInformations extends StatefulWidget {
   final String city;
@@ -31,189 +35,98 @@ class _PrincipalInformations extends State<PrincipalInformations> {
         if (snapshot.hasData &&
             snapshot.connectionState == ConnectionState.done) {
           snap = snapshot;
+
+          //Timestamp formatting
+          String zeroFix(int tStamp) {
+            return tStamp.toString().padLeft(2, '0');
+          }
+
+          int sunriseTimestamp = snapshot.data!.sunrise;
+          int sunsetTimestamp = snapshot.data!.sunset;
+
+          DateTime sunriseDateTime =
+              DateTime.fromMillisecondsSinceEpoch(sunriseTimestamp * 1000);
+          DateTime sunsetDateTime =
+              DateTime.fromMillisecondsSinceEpoch(sunsetTimestamp * 1000);
+
+          String sunriseTime =
+              '${zeroFix(sunriseDateTime.hour)}:${zeroFix(sunriseDateTime.minute)}';
+          String sunsetTime =
+              '${zeroFix(sunsetDateTime.hour)}:${zeroFix(sunsetDateTime.minute)}';
+
           return Stack(
             children: [
-              Background(),
-              Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Column(
-                      children: [
-                        Lottie.asset(getWeatherAnimation(icon), height: 150),
-                        Text(
-                          "${snapshot.data!.temp.toStringAsFixed(0)}°",
-                          style: const TextStyle(
-                              fontSize: 48, fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          "${snapshot.data!.name}",
-                          style: const TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.w500),
-                        ),
-                        const SizedBox(height: 2),
-                        Text(
-                            "${snapshot.data!.state}, ${snapshot.data!.country}",
-                            style:
-                                const TextStyle(fontStyle: FontStyle.italic)),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        Text(
-                            firstLetterToUpperCase(
-                                "${snapshot.data!.description}"),
-                            style: const TextStyle(
-                                fontWeight: FontWeight.w300, fontSize: 17)),
-                      ],
-                    ),
-                  ],
-                ),
+              const Background(),
+              CenterInformations(
+                cityName: snapshot.data!.name,
+                country: snapshot.data!.country,
+                description: snapshot.data!.description,
+                icon: icon,
+                state: snap.data.state,
+                temp: snapshot.data!.temp,
               ),
               Positioned(
-                bottom: 24,
+                bottom: 16,
                 left: 0,
                 right: 0,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Column(
-                      children: [
-                        const Text(
-                          "Umidade",
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w400),
+                child: SizedBox(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 72,
+                        child: ListView(
+                          physics: const BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          children: [
+                            AdditionalInformations(
+                              description: "Sens. Térmica",
+                              content:
+                                  "${snapshot.data!.feelsLike.toStringAsFixed(1)}°",
+                            ),
+                            AdditionalInformations(
+                              description: "Umidade",
+                              content: "${snapshot.data!.humidity}",
+                              unitOfMeasurement: "%",
+                            ),
+                            AdditionalInformations(
+                              description: "Vel. Vento",
+                              content:
+                                  "${snapshot.data!.windSpeed.toStringAsFixed(0)}",
+                              unitOfMeasurement: "km/h",
+                            ),
+                            AdditionalInformations(
+                              description: "Pressão",
+                              content: "${snapshot.data!.pressure}",
+                              unitOfMeasurement: "hPa",
+                            ),
+                            AdditionalInformations(
+                              description: "Nascer do Sol",
+                              content: sunriseTime,
+                            ),
+                            AdditionalInformations(
+                              description: "Pôr do Sol",
+                              content: sunsetTime,
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: 8),
-                        RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text: "${snapshot.data!.humidity}",
-                                style: const TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              const TextSpan(
-                                text: "%",
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.w500),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        const Text(
-                          "Sens. Térmica",
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w400),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          "${snapshot.data!.feelsLike.toStringAsFixed(1)}°",
-                          style: const TextStyle(
-                              fontSize: 30, fontWeight: FontWeight.bold),
-                        )
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        const Text(
-                          "Vel. Vento",
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w400),
-                        ),
-                        const SizedBox(height: 8),
-                        RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text:
-                                    "${snapshot.data!.windSpeed.toStringAsFixed(0)}",
-                                style: const TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              const TextSpan(
-                                text: "km/h",
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.w500),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                      ),
+                      const FrostedGlass(),
+                    ],
+                  ),
                 ),
-              )
+              ),
             ],
           );
         } else if (snapshot.connectionState == ConnectionState.waiting &&
             cityValue != "") {
-          return Stack(
-            children: [
-              Background(),
-              Center(
-                child: CircularProgressIndicator(
-                  strokeWidth: 3,
-                  color: Color(0xffffffff),
-                ),
-              ),
-            ],
-          );
+          return const Load();
         } else if (snapshot.hasError && cityValue != "") {
           icon = "initial";
-          return Stack(
-            children: [
-              Background(),
-              Center(
-                child: Text(
-                  "Não conseguimos encontrar essa localização 🗺️",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
-                ),
-              ),
-            ],
-          );
         } else if (cityValue == "") {
           icon = "initial";
-          return Stack(
-            children: [
-              Background(),
-              const Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircularProgressIndicator(
-                      strokeWidth: 3,
-                      color: Color(0xffffffff),
-                    ),
-                    SizedBox(height: 16),
-                    Text("Aguarde",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w300)),
-                    SizedBox(height: 32),
-                  ],
-                ),
-              ),
-              Positioned(
-                bottom: 24,
-                child: Container(
-                  padding: const EdgeInsets.only(left: 4, right: 4),
-                  width: MediaQuery.of(context).size.width,
-                  child: const Text(
-                    "Caso não haja uma cidade, por favor, acrescente uma",
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              )
-            ],
-          );
+          return Initial(
+              bottomText: "Não adcionou uma cidade? Por favor, adcione uma!",
+              centerText: "Aguarde");
         }
         return const SizedBox();
       },
