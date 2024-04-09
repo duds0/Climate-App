@@ -7,3 +7,5 @@ var icon = "initial";
 var snap;
 var requests;
 var cityValue = "";
+
+//asdasd
