@@ -3,7 +3,7 @@ import 'package:weather_animation/weather_animation.dart';
 import 'package:climate_app/global/variables.dart';
 
 class Background extends StatefulWidget {
-  const Background({super.key});
+  const Background({Key? key}) : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api

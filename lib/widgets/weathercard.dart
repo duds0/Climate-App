@@ -11,7 +11,7 @@ class WeatherCard extends StatefulWidget {
   final String city;
   final VoidCallback onRemove;
 
-  WeatherCard({
+  const WeatherCard({
     Key? key,
     required this.city,
     required this.onRemove,

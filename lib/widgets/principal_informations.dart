@@ -13,9 +13,9 @@ class PrincipalInformations extends StatefulWidget {
   final String city;
 
   const PrincipalInformations({
-    super.key,
+    Key? key,
     required this.city,
-  });
+  }) : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
@@ -124,7 +124,7 @@ class _PrincipalInformations extends State<PrincipalInformations> {
           icon = "initial";
         } else if (cityValue == "") {
           icon = "initial";
-          return Initial(
+          return const Initial(
               bottomText: "Não adcionou uma cidade? Por favor, adcione uma!",
               centerText: "Aguarde");
         }
