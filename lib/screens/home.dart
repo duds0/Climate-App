@@ -64,12 +64,7 @@ class _Home extends State<HomePage> with AutomaticKeepAliveClientMixin {
         return shouldPop ?? false;
       },
       child: MaterialApp(
-        darkTheme: ThemeData.dark().copyWith(
-          textTheme: ThemeData.dark().textTheme.apply(
-                fontFamily: "Inter",
-              ),
-        ),
-        theme: ThemeData(fontFamily: "Inter"),
+        theme: ThemeData(fontFamily: "Inter", brightness: Brightness.dark),
         home: Scaffold(
           extendBodyBehindAppBar: true,
           appBar: AppBar(
