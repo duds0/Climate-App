@@ -41,19 +41,21 @@ class _Home extends State<HomePage> with AutomaticKeepAliveClientMixin {
         final shouldPop = await showCupertinoDialog(
           context: context,
           builder: (context) => CupertinoAlertDialog(
-            title: const Text('Tem certeza?'),
-            content: const Text('Você realmente quer sair?'),
+            title: const Text("Tem certeza?",
+                style: TextStyle(fontFamily: "Inter")),
+            content: const Text("Você realmente quer sair?",
+                style: TextStyle(fontFamily: "Inter")),
             actions: <Widget>[
               CupertinoDialogAction(
                 onPressed: () => Navigator.of(context).pop(false),
                 textStyle: const TextStyle(color: CupertinoColors.systemRed),
-                child: const Text('Não'),
+                child: const Text("Não", style: TextStyle(fontFamily: "Inter")),
               ),
               CupertinoDialogAction(
                 onPressed: () => Navigator.of(context).pop(true),
                 isDefaultAction: true,
                 textStyle: const TextStyle(color: CupertinoColors.systemBlue),
-                child: const Text('Sim'),
+                child: const Text("Sim", style: TextStyle(fontFamily: "Inter")),
               ),
             ],
           ),
