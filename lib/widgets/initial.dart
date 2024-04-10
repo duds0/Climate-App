@@ -154,12 +154,12 @@ class Initial extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 32),
                 child: Center(
                   child: Text(
-                    "Parece que você não adicionou nenhuma cidade. Adicione uma! 🗺️",
+                    "Nenhuma cidade encontrada. Adicione uma agora! 🌍🗺️",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontFamily: 'Inter',
                         fontWeight: FontWeight.w300,
-                        fontSize: 16),
+                        fontSize: 18),
                   ),
                 ),
               )
