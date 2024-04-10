@@ -51,9 +51,10 @@ class _WeatherCardState extends State<WeatherCard> {
                   context, "Não foi possível encontrar a sua localização");
             },
           );
+        } else if (snapshot.connectionState == ConnectionState.waiting) {
           return _buildShimmer();
         }
-        return _buildShimmer();
+        return const SizedBox();
       },
     );
   }
@@ -142,7 +143,7 @@ void errorMessage(BuildContext context, String message) {
     backgroundColor: const Color.fromARGB(255, 66, 66, 66),
     content: Text(
       message,
-      style: const TextStyle(color: Colors.white),
+      style: const TextStyle(color: Colors.white, fontFamily: "Inter"),
     ),
     duration: const Duration(seconds: 3, milliseconds: 5),
   );
