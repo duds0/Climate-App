@@ -124,9 +124,7 @@ class _PrincipalInformations extends State<PrincipalInformations> {
           icon = "initial";
         } else if (cityValue == "") {
           icon = "initial";
-          return const Initial(
-              bottomText: "Não adcionou uma cidade? Por favor, adcione uma!",
-              centerText: "Aguarde");
+          return Initial();
         }
         return const SizedBox();
       },
