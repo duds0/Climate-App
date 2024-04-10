@@ -38,7 +38,12 @@ class _Locations extends State<Locations> with AutomaticKeepAliveClientMixin {
         return false;
       },
       child: MaterialApp(
-        theme: ThemeData.dark(),
+        darkTheme: ThemeData.dark().copyWith(
+          textTheme: ThemeData.dark().textTheme.apply(
+                fontFamily: "Inter",
+              ),
+        ),
+        theme: ThemeData(fontFamily: "Inter"),
         home: Scaffold(
           backgroundColor: const Color(0xff1F1F1F),
           appBar: AppBar(
