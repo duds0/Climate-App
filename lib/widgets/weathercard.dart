@@ -51,9 +51,9 @@ class _WeatherCardState extends State<WeatherCard> {
                   context, "Não foi possível encontrar a sua localização");
             },
           );
-          return const SizedBox.shrink();
+          return _buildShimmer();
         }
-        return const SizedBox();
+        return _buildShimmer();
       },
     );
   }
