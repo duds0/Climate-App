@@ -61,51 +61,59 @@ class _Home extends State<HomePage> with AutomaticKeepAliveClientMixin {
 
         return shouldPop ?? false;
       },
-      child: Scaffold(
-        extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          forceMaterialTransparency: true,
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          actions: [
-            IconButton(
-              onPressed: () {
-                Navigator.of(context).pushReplacement(CupertinoPageRoute(
-                    builder: (context) => const Locations()));
-
-                toggleHomePageController();
-              },
-              icon: const Icon(
-                Icons.add,
-                size: 32,
-                color: Colors.white,
+      child: MaterialApp(
+        darkTheme: ThemeData.dark().copyWith(
+          textTheme: ThemeData.dark().textTheme.apply(
+                fontFamily: "Inter",
               ),
-            ),
-          ],
         ),
-        body: FutureBuilder<List<String>>(
-          future: _loadCitiesFromSharedPreferences(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            } else if (snapshot.hasError) {
-              return Text('Erro: ${snapshot.error}');
-            } else {
-              List<String> savedCities = snapshot.data!;
-              String firstCity =
-                  savedCities.isNotEmpty ? savedCities.first : 'Default City';
+        theme: ThemeData(fontFamily: "Inter"),
+        home: Scaffold(
+          extendBodyBehindAppBar: true,
+          appBar: AppBar(
+            forceMaterialTransparency: true,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            actions: [
+              IconButton(
+                onPressed: () {
+                  Navigator.of(context).pushReplacement(CupertinoPageRoute(
+                      builder: (context) => const Locations()));
 
-              return Stack(
-                children: [
-                  homePageController
-                      ? PrincipalInformations(
-                          city: firstCity,
-                        )
-                      : PrincipalInformations(city: cityValue)
-                ],
-              );
-            }
-          },
+                  toggleHomePageController();
+                },
+                icon: const Icon(
+                  Icons.add,
+                  size: 32,
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+          body: FutureBuilder<List<String>>(
+            future: _loadCitiesFromSharedPreferences(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator();
+              } else if (snapshot.hasError) {
+                return Text('Erro: ${snapshot.error}');
+              } else {
+                List<String> savedCities = snapshot.data!;
+                String firstCity =
+                    savedCities.isNotEmpty ? savedCities.first : 'Default City';
+
+                return Stack(
+                  children: [
+                    homePageController
+                        ? PrincipalInformations(
+                            city: firstCity,
+                          )
+                        : PrincipalInformations(city: cityValue)
+                  ],
+                );
+              }
+            },
+          ),
         ),
       ),
     );

@@ -20,7 +20,11 @@ class AdditionalInformations extends StatelessWidget {
         children: [
           Text(
             description,
-            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
+            style: const TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.w400,
+              fontFamily: "Inter",
+            ),
           ),
           const SizedBox(height: 8),
           RichText(
@@ -29,17 +33,17 @@ class AdditionalInformations extends StatelessWidget {
                 TextSpan(
                   text: content,
                   style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "Inter"),
                 ),
                 if (unitOfMeasurement != null)
                   TextSpan(
                     text: unitOfMeasurement!,
                     style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: "Inter"),
                   ),
               ],
             ),

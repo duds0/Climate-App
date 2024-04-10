@@ -15,8 +15,6 @@ class _MyApp extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      darkTheme: ThemeData.dark(),
-      theme: ThemeData(fontFamily: 'Inter'),
       initialRoute: "/home",
       routes: {
         "/home": (context) => const HomePage(),
