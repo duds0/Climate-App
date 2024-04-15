@@ -122,33 +122,32 @@ class _Locations extends State<Locations> with AutomaticKeepAliveClientMixin {
                 ),
                 const SizedBox(height: 16),
                 Expanded(
-                  child: Container(
+                  child: ListView.separated(
+                    addRepaintBoundaries: true,
                     padding: EdgeInsets.only(
                         left: 16, right: iconController ? 0 : 16),
-                    child: ListView.separated(
-                      separatorBuilder: (BuildContext context, int index) =>
-                          const SizedBox(
-                        height: 2,
-                      ),
-                      itemCount: items.length,
-                      shrinkWrap: true,
-                      physics: const BouncingScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          contentPadding:
-                              const EdgeInsets.symmetric(horizontal: 0),
-                          title: items[index],
-                          trailing: iconController
-                              ? IconButton(
-                                  icon: const Icon(Icons.delete,
-                                      color: Colors.redAccent),
-                                  onPressed: () =>
-                                      _removeCity(items[index].city),
-                                )
-                              : null,
-                        );
-                      },
+                    separatorBuilder: (BuildContext context, int index) =>
+                        const SizedBox(
+                      height: 2,
                     ),
+                    itemCount: items.length,
+                    shrinkWrap: true,
+                    physics: const BouncingScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        horizontalTitleGap: 2,
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 0),
+                        title: items[index],
+                        trailing: iconController
+                            ? IconButton(
+                                icon: const Icon(Icons.delete,
+                                    color: Colors.redAccent),
+                                onPressed: () => _removeCity(items[index].city),
+                              )
+                            : null,
+                      );
+                    },
                   ),
                 ),
               ],
