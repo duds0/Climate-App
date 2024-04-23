@@ -106,8 +106,8 @@ class _Locations extends State<Locations> with AutomaticKeepAliveClientMixin {
                       if (city.isNotEmpty) {
                         setState(
                           () {
+                            fetch(city);
                             cityValue = city;
-                            fetch(cityValue);
                             textController.clear();
                             items.add(WeatherCard(
                                 city: cityValue,

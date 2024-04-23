@@ -11,37 +11,46 @@ Future<Requests> fetch(city) async {
   var response = await http.get(Uri.parse(urlCoordInfos));
   var jsonCoordInfos = jsonDecode(response.body);
 
-  lat = jsonCoordInfos[0]["lat"];
-  lon = jsonCoordInfos[0]["lon"];
+  if (jsonCoordInfos.isNotEmpty) {
+    lat = jsonCoordInfos[0]["lat"];
+    lon = jsonCoordInfos[0]["lon"];
 
-  var urlWeatherInfos =
-      "https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=95b9027fe9d1f6c19c6b21c7a2d3f521&units=metric&lang=pt_br";
+    var urlWeatherInfos =
+        "https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=95b9027fe9d1f6c19c6b21c7a2d3f521&units=metric&lang=pt_br";
 
-  await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 2));
 
-  var response0 = await http.get(Uri.parse(urlWeatherInfos));
-  var jsonWeatherInfos = jsonDecode(response0.body);
+    var response0 = await http.get(Uri.parse(urlWeatherInfos));
+    var jsonWeatherInfos = jsonDecode(response0.body);
 
-  icon = jsonWeatherInfos["weather"][0]["icon"];
+    if (jsonWeatherInfos.containsKey("weather") &&
+        jsonWeatherInfos["weather"].isNotEmpty) {
+      icon = jsonWeatherInfos["weather"][0]["icon"];
 
-  requests = Requests(
-    name: jsonCoordInfos[0]["name"],
-    country: jsonCoordInfos[0]["country"],
-    state: jsonCoordInfos[0]["state"],
-    temp: jsonWeatherInfos["main"]["temp"],
-    temp_min: jsonWeatherInfos["main"]["temp_min"],
-    temp_max: jsonWeatherInfos["main"]["temp_max"],
-    description: jsonWeatherInfos["weather"][0]["description"],
-    icon: icon,
-    humidity: jsonWeatherInfos["main"]["humidity"],
-    windSpeed: jsonWeatherInfos["wind"]["speed"],
-    feelsLike: jsonWeatherInfos["main"]["feels_like"],
-    pressure: jsonWeatherInfos["main"]["pressure"],
-    sunrise: jsonWeatherInfos["sys"]["sunrise"],
-    sunset: jsonWeatherInfos["sys"]["sunset"],
-  );
+      requests = Requests(
+        name: jsonCoordInfos[0]["name"],
+        country: jsonCoordInfos[0]["country"],
+        state: jsonCoordInfos[0]["state"],
+        temp: jsonWeatherInfos["main"]["temp"],
+        temp_min: jsonWeatherInfos["main"]["temp_min"],
+        temp_max: jsonWeatherInfos["main"]["temp_max"],
+        description: jsonWeatherInfos["weather"][0]["description"],
+        icon: icon,
+        humidity: jsonWeatherInfos["main"]["humidity"],
+        windSpeed: jsonWeatherInfos["wind"]["speed"],
+        feelsLike: jsonWeatherInfos["main"]["feels_like"],
+        pressure: jsonWeatherInfos["main"]["pressure"],
+        sunrise: jsonWeatherInfos["sys"]["sunrise"],
+        sunset: jsonWeatherInfos["sys"]["sunset"],
+      );
 
-  return requests;
+      return requests;
+    } else {
+      throw Exception("Não foi possível obter informações do clima");
+    }
+  } else {
+    throw Exception("Não foi possível obter informações de localização");
+  }
 }
 
 class Requests {

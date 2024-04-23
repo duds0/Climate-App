@@ -48,7 +48,7 @@ class _WeatherCardState extends State<WeatherCard> {
           WidgetsBinding.instance.addPostFrameCallback(
             (timeStamp) {
               errorMessage(
-                  context, "Não foi possível encontrar a sua localização");
+                  context, "Não foi possível encontrar esta localização");
             },
           );
         } else if (snapshot.connectionState == ConnectionState.waiting) {
